@@ -9,17 +9,12 @@ public class Family {
 	private String name;
 	private List<Student> children;
 	private double price;
-	private double amount;
 
-	public Family() {
-	}
-
-	public Family(ObjectId id, String name, List<Student> children, double price, double amount) {
+	public Family(ObjectId id, String name, List<Student> children, double price) {
 		this.id = id;
 		this.name = name;
 		this.children = children;
 		this.price = price;
-		this.amount = amount;
 	}
 
 	public ObjectId getId() {
@@ -54,13 +49,6 @@ public class Family {
 		this.price = price;
 	}
 
-	public double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(double amount) {
-		this.amount = amount;
-	}
 
 	@Override
 	public String toString() {
@@ -69,7 +57,6 @@ public class Family {
 				", name='" + name + '\'' +
 				", children=" + children +
 				", price=" + price +
-				", amount=" + amount +
 				'}';
 	}
 }
