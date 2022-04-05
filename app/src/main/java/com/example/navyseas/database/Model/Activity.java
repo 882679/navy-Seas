@@ -8,13 +8,13 @@ public class Activity {
 	private ObjectId id;
 	private String name;
 	private String day;
-	private float price;
+	private double price;
 	private List<Student> students;
 
 	public Activity() {
 	}
 
-	public Activity(ObjectId id, String name, String day, float price, List<Student> students) {
+	public Activity(ObjectId id, String name, String day, double price, List<Student> students) {
 		this.id = id;
 		this.name = name;
 		this.day = day;
@@ -46,11 +46,11 @@ public class Activity {
 		this.day = day;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

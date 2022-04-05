@@ -8,13 +8,13 @@ public class Family {
 	private ObjectId id;
 	private String name;
 	private List<Student> children;
-	private float price;
-	private float amount;
+	private double price;
+	private double amount;
 
 	public Family() {
 	}
 
-	public Family(ObjectId id, String name, List<Student> children, float price, float amount) {
+	public Family(ObjectId id, String name, List<Student> children, double price, double amount) {
 		this.id = id;
 		this.name = name;
 		this.children = children;
@@ -46,19 +46,19 @@ public class Family {
 		this.children = children;
 	}
 
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public float getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 
-	public void setAmount(float amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 
