@@ -18,14 +18,6 @@ public class TestFamilies {
 
 		MongoCollection<Family> family = database.getCollection("Family", Family.class);
 
-		Family stu = new Family(new ObjectId(), "McCallister", Collections.emptyList(), 0);
-
-		try {
-			family.insertOne(stu);
-		} catch (MongoException me) {
-			System.err.println("Unable to delete due to an error: " + me);
-		}
-
 		FindIterable<Family> it = family.find();
 
 		ArrayList<Family> families = new ArrayList<>();

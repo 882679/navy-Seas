@@ -10,6 +10,9 @@ public class Family {
 	private List<Student> children;
 	private double price;
 
+	public Family() {
+	}
+
 	public Family(ObjectId id, String name, List<Student> children, double price) {
 		this.id = id;
 		this.name = name;

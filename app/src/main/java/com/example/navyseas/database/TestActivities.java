@@ -18,14 +18,6 @@ public class TestActivities {
 
 		MongoCollection<Activity> activities = database.getCollection("Activity", Activity.class);
 
-		Activity act = new Activity(new ObjectId(), "Test", "Monday", 9, Collections.emptyList());
-
-		try {
-			activities.insertOne(act);
-		} catch (MongoException me) {
-			System.err.println("Unable to delete due to an error: " + me);
-		}
-
 		FindIterable<Activity> it = activities.find();
 
 		ArrayList<Activity> activity = new ArrayList<>();
