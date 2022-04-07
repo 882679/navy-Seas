@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.navyseas.ui.profile.ProfileFragment"
+        android:label="Profilo"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.navyseas.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"

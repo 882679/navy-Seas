@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.navyseas.DataMockup;
 import com.example.navyseas.R;
 import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Student;
@@ -36,24 +37,11 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        DataMockup dm = new DataMockup();
+
         RecyclerView recyclerView = root.findViewById(R.id.recyclerView);
 
-        List<Activity> reservations = new ArrayList<>();
-        List<Student> students = new ArrayList<>();
-        /*students.add(new Student(new ObjectId(), "Alvise", reservations));
-        students.add(new Student(new ObjectId(), "Angelo", reservations));
-        students.add(new Student(new ObjectId(), "Alessandro", reservations));
-        students.add(new Student(new ObjectId(), "Giulia", reservations));*/
-        reservations.add(new Activity(new ObjectId(), "Tennis", "Lunedi", 10.0, students));
-        reservations.add(new Activity(new ObjectId(), "Lettura", "Lunedi", 10.0, students));
-        reservations.add(new Activity(new ObjectId(), "Cinema", "Lunedi", 10.0, students));
-        reservations.add(new Activity(new ObjectId(), "Bicicletta", "Lunedi", 10.0, students));
-        reservations.add(new Activity(new ObjectId(), "Tennis", "Lunedi", 10.0, students));
-        reservations.add(new Activity(new ObjectId(), "Lettura", "Lunedi", 10.0, students));
-        reservations.add(new Activity(new ObjectId(), "Cinema", "Lunedi", 10.0, students));
-        reservations.add(new Activity(new ObjectId(), "Bicicletta", "Lunedi", 10.0, students));
-
-        HomePageAdapter adapter = new HomePageAdapter(container.getContext(), reservations);
+        HomePageAdapter adapter = new HomePageAdapter(container.getContext(), dm.reservations);
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
