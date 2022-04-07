@@ -18,13 +18,13 @@ public class TestStudents {
 
 		MongoCollection<Student> student = database.getCollection("Student", Student.class);
 
-		Student stu = new Student(new ObjectId(), "Angelo", Collections.emptyList());
+		/*Student stu = new Student(new ObjectId(), "Angelo", Collections.emptyList());
 
 		try {
 			student.insertOne(stu);
 		} catch (MongoException me) {
 			System.err.println("Unable to delete due to an error: " + me);
-		}
+		}*/
 
 		FindIterable<Student> it = student.find();
 

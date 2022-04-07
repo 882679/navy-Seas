@@ -40,10 +40,10 @@ public class HomeFragment extends Fragment {
 
         List<Activity> reservations = new ArrayList<>();
         List<Student> students = new ArrayList<>();
-        students.add(new Student(new ObjectId(), "Alvise", reservations));
+        /*students.add(new Student(new ObjectId(), "Alvise", reservations));
         students.add(new Student(new ObjectId(), "Angelo", reservations));
         students.add(new Student(new ObjectId(), "Alessandro", reservations));
-        students.add(new Student(new ObjectId(), "Giulia", reservations));
+        students.add(new Student(new ObjectId(), "Giulia", reservations));*/
         reservations.add(new Activity(new ObjectId(), "Tennis", "Lunedi", 10.0, students));
         reservations.add(new Activity(new ObjectId(), "Lettura", "Lunedi", 10.0, students));
         reservations.add(new Activity(new ObjectId(), "Cinema", "Lunedi", 10.0, students));
