@@ -12,15 +12,9 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.navyseas.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.navyseas.ui.profile.ProfileFragment"
-        android:label="Profilo"
+        android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment

@@ -10,12 +10,6 @@ public class Student {
 	private String name;
 	private List<Activity> activities;
 
-	public Student(ObjectId id, String name, List<Activity> activities) {
-		this.id = id;
-		this.name = name;
-		this.activities = activities;
-	}
-
 	public Student(ObjectId id, Family family, String name, List<Activity> activities) {
 		this.id = id;
 		this.family = family;
