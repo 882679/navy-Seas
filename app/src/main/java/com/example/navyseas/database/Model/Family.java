@@ -7,17 +7,17 @@ import java.util.List;
 public class Family {
 	private ObjectId id;
 	private String name;
-	private List<Student> children;
-	private double price;
+	private List<Student> students;
+	private double amount;
 
 	public Family() {
 	}
 
-	public Family(ObjectId id, String name, List<Student> children, double price) {
+	public Family(ObjectId id, String name, List<Student> students, double amount) {
 		this.id = id;
 		this.name = name;
-		this.children = children;
-		this.price = price;
+		this.students = students;
+		this.amount = amount;
 	}
 
 	public ObjectId getId() {
@@ -36,30 +36,29 @@ public class Family {
 		this.name = name;
 	}
 
-	public List<Student> getChildren() {
-		return children;
+	public List<Student> getStudents() {
+		return students;
 	}
 
-	public void setChildren(List<Student> children) {
-		this.children = children;
+	public void setStudents(List<Student> students) {
+		this.students = students;
 	}
 
-	public double getPrice() {
-		return price;
+	public double getAmount() {
+		return amount;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
-
 
 	@Override
 	public String toString() {
 		return "Family{" +
 				"id=" + id +
 				", name='" + name + '\'' +
-				", children=" + children +
-				", price=" + price +
+				", students=" + students +
+				", amount=" + amount +
 				'}';
 	}
 }

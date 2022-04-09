@@ -27,16 +27,32 @@ public class Student {
 		return id;
 	}
 
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
+
 	public Family getFamily() {
 		return family;
+	}
+
+	public void setFamily(Family family) {
+		this.family = family;
 	}
 
 	public String getName() {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public List<Activity> getActivities() {
 		return activities;
+	}
+
+	public void setActivities(List<Activity> activities) {
+		this.activities = activities;
 	}
 
 	@Override
