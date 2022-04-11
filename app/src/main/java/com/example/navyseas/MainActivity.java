@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private DrawerLayout drawer;
     private NavigationView navigationView;
-    private NavController navController;
+    public static NavController navController;
     private DataMockup dataMockup = new DataMockup();
     public static Student selectedStudent;
 
@@ -38,13 +38,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         drawer = binding.drawerLayout;
         navigationView = binding.navView;
@@ -69,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         SubMenu menuGroup = navigationView.getMenu().addSubMenu("Figli");
         int index = 1;
         for (Student stud :
-                dataMockup.family.getStudents()) {
+                dataMockup.family.getChildren()) {
             menuGroup.add(R.id.nav_profile, index, Menu.NONE, stud.getName()).setIcon(R.drawable.ic_student);
 
             index++;

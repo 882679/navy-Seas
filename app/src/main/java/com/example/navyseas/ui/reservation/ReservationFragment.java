@@ -1,4 +1,4 @@
-package com.example.navyseas.ui.profile;
+package com.example.navyseas.ui.reservation;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,31 +15,43 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
+import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Student;
-import com.example.navyseas.databinding.ActivityMainBinding;
-import com.example.navyseas.databinding.FragmentProfileBinding;
+import com.example.navyseas.databinding.FragmentReservationBinding;
 import com.example.navyseas.ui.home.HomeFragment;
+import com.example.navyseas.ui.reservation.ReservationViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
-public class ProfileFragment extends Fragment {
-    private FragmentProfileBinding binding;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ReservationFragment extends Fragment {
+    private FragmentReservationBinding binding;
     private final Student selectedStudent = MainActivity.selectedStudent;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ProfileViewModel profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
+        ReservationViewModel reservationViewModel =
+                new ViewModelProvider(this).get(ReservationViewModel.class);
 
 
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        binding = FragmentReservationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textProfile;
-        textView.setText("Profilo di "+selectedStudent.getName());
+        textView.setText("Attività non prenotate da "+selectedStudent.getName()+":");
 
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewProfile);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewReservation);
 
-        ProfileAdapter adapter = new ProfileAdapter(container.getContext(), selectedStudent.getActivities());
+        List<Activity> activitiesNotBooked = new ArrayList<>();
+        for (int i = 0; i < HomeFragment.dm.activityList.size(); i++){
+            if (!selectedStudent.getActivities().contains(HomeFragment.dm.activityList.get(i))){
+                activitiesNotBooked.add(HomeFragment.dm.activityList.get(i));
+            }
+        }
+
+
+        ReservationAdapter adapter = new ReservationAdapter(container.getContext(), activitiesNotBooked);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
@@ -49,15 +61,6 @@ public class ProfileFragment extends Fragment {
 
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        binding.fabAddReservation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.navController.navigate(R.id.nav_reservation);
-                Snackbar.make(view, "Prenotazione nuova attività", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         return root;
     }

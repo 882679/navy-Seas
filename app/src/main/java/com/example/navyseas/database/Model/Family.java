@@ -3,6 +3,7 @@ package com.example.navyseas.database.Model;
 import org.bson.types.ObjectId;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Family {
 	private ObjectId id;
@@ -80,4 +81,5 @@ public class Family {
 
 		updateAmount();
 	}
+
 }
