@@ -28,107 +28,107 @@ import com.example.navyseas.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
-    private DrawerLayout drawer;
-    private NavigationView navigationView;
+	private AppBarConfiguration mAppBarConfiguration;
+	private ActivityMainBinding binding;
+	private DrawerLayout drawer;
+	private NavigationView navigationView;
 
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@SuppressLint("NonConstantResourceId")
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+		binding = ActivityMainBinding.inflate(getLayoutInflater());
+		setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DataMockup dm = new DataMockup();
-        
-        drawer = binding.drawerLayout;
-        navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+		setSupportActionBar(binding.appBarMain.toolbar);
+		binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+						.setAction("Action", null).show();
+			}
+		});
+		DataMockup dm = new DataMockup();
 
-        setupDrawerContent(dm);
+		drawer = binding.drawerLayout;
+		navigationView = binding.navView;
+		// Passing each menu ID as a set of Ids because each
+		// menu should be considered as top level destinations.
 
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home)
-                .setOpenableLayout(drawer)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-    }
+		setupDrawerContent(dm);
 
-
-    private void setupDrawerContent(DataMockup dm){
-        SubMenu menuGroup = navigationView.getMenu().addSubMenu("Figli");
-        for (Student stud :
-                dm.family.getChildren()) {
-            menuGroup.add(stud.getName());
-        }
+		mAppBarConfiguration = new AppBarConfiguration.Builder(
+				R.id.nav_home)
+				.setOpenableLayout(drawer)
+				.build();
+		NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+		NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+		NavigationUI.setupWithNavController(navigationView, navController);
+	}
 
 
-        navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
-                });
-    }
-
-    public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        Fragment fragment = null;
-        Class fragmentClass;
-        switch(menuItem.getItemId()) {
-            case R.id.nav_profile:
-                fragmentClass = ProfileFragment.class;
-                break;
-            default:
-                fragmentClass = HomeFragment.class;
-        }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.app_bar_main, fragment).commit();
-
-        // Highlight the selected item has been done by NavigationView
-        menuItem.setChecked(true);
-        // Set action bar title
-        setTitle(menuItem.getTitle());
-        // Close the navigation drawer
-        drawer.closeDrawers();
-    }
+	private void setupDrawerContent(DataMockup dm){
+		SubMenu menuGroup = navigationView.getMenu().addSubMenu("Figli");
+		for (Student stud :
+				dm.family.getChildren()) {
+			menuGroup.add(stud.getName());
+		}
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+		navigationView.setNavigationItemSelectedListener(
+				new NavigationView.OnNavigationItemSelectedListener() {
+					@Override
+					public boolean onNavigationItemSelected(MenuItem menuItem) {
+						selectDrawerItem(menuItem);
+						return true;
+					}
+				});
+	}
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
-    }
+	public void selectDrawerItem(MenuItem menuItem) {
+		// Create a new fragment and specify the fragment to show based on nav item clicked
+		Fragment fragment = null;
+		Class fragmentClass;
+		switch(menuItem.getItemId()) {
+			case R.id.nav_profile:
+				fragmentClass = ProfileFragment.class;
+				break;
+			default:
+				fragmentClass = HomeFragment.class;
+		}
+
+		try {
+			fragment = (Fragment) fragmentClass.newInstance();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// Insert the fragment by replacing any existing fragment
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.app_bar_main, fragment).commit();
+
+		// Highlight the selected item has been done by NavigationView
+		menuItem.setChecked(true);
+		// Set action bar title
+		setTitle(menuItem.getTitle());
+		// Close the navigation drawer
+		drawer.closeDrawers();
+	}
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	@Override
+	public boolean onSupportNavigateUp() {
+		NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+		return NavigationUI.navigateUp(navController, mAppBarConfiguration)
+				|| super.onSupportNavigateUp();
+	}
 
 }

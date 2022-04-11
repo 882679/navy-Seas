@@ -2,23 +2,19 @@ package com.example.navyseas.database.Model;
 
 import org.bson.types.ObjectId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student {
 	private ObjectId id;
-	private Family family;
 	private String name;
 	private List<Activity> activities;
 
-	public Student(ObjectId id, String name, List<Activity> activities) {
-		this.id = id;
-		this.name = name;
-		this.activities = activities;
+	public Student() {
 	}
 
-	public Student(ObjectId id, Family family, String name, List<Activity> activities) {
+	public Student(ObjectId id, String name, List<Activity> activities) {
 		this.id = id;
-		this.family = family;
 		this.name = name;
 		this.activities = activities;
 	}
@@ -29,14 +25,6 @@ public class Student {
 
 	public void setId(ObjectId id) {
 		this.id = id;
-	}
-
-	public Family getFamily() {
-		return family;
-	}
-
-	public void setFamily(Family family) {
-		this.family = family;
 	}
 
 	public String getName() {
@@ -59,9 +47,32 @@ public class Student {
 	public String toString() {
 		return "Student{" +
 				"id=" + id +
-				", family=" + family +
 				", name='" + name + '\'' +
 				", activities=" + activities +
 				'}';
+	}
+
+	public boolean checkActivities(Activity a, ArrayList<Student> students) {
+		return !(activities.contains(a)) && checkDay(a) && checkCapacity(a, students);
+	}
+
+	private boolean checkCapacity(Activity a, ArrayList<Student> students) {
+		int taken = 0;
+
+		for (int i = 0; i < students.size(); i++) {
+			for (int j = 0; j < students.get(i).getActivities().size(); j++) {
+				if (students.get(i).getActivities().get(j).getId().equals(a.getId())) taken++;
+			}
+		}
+
+		return taken < a.getCapacity();
+	}
+
+	private boolean checkDay(Activity a) {
+		for (int i = 0; i < activities.size(); i++) {
+			if (activities.get(i).getDay().equals(a.getDay())) return false;
+		}
+
+		return true;
 	}
 }

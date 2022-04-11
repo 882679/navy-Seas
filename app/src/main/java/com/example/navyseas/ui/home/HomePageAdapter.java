@@ -77,7 +77,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
         public void setData(Activity currentCard) {
             this.activityName.setText(currentCard.getName());
             this.imgActivity.setImageResource(R.drawable.icon_activity);
-            this.studentName.setText(currentCard.getStudents().get(0).getName());
+            // this.studentName.setText(currentCard.getStudents().get(0).getName());
             this.price.setText(""+currentCard.getPrice());
             this.day.setText(currentCard.getDay());
         }

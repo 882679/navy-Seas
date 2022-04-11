@@ -9,17 +9,17 @@ public class Activity {
 	private String name;
 	private String day;
 	private double price;
-	private List<Student> students;
+	private int capacity;
 
 	public Activity() {
 	}
 
-	public Activity(ObjectId id, String name, String day, double price, List<Student> students) {
+	public Activity(ObjectId id, String name, String day, double price, int capacity) {
 		this.id = id;
 		this.name = name;
 		this.day = day;
 		this.price = price;
-		this.students = students;
+		this.capacity = capacity;
 	}
 
 	public ObjectId getId() {
@@ -54,12 +54,12 @@ public class Activity {
 		this.price = price;
 	}
 
-	public List<Student> getStudents() {
-		return students;
+	public int getCapacity() {
+		return capacity;
 	}
 
-	public void setStudents(List<Student> students) {
-		this.students = students;
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class Activity {
 				", name='" + name + '\'' +
 				", day='" + day + '\'' +
 				", price=" + price +
-				", students=" + students +
+				", capacity=" + capacity +
 				'}';
 	}
 }

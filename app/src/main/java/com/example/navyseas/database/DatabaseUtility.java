@@ -56,7 +56,6 @@ public class DatabaseUtility {
 		return mongoClient.getDatabase("Navy-SEAS");
 	}
 
-
 	public static void deleteAllDocuments(MongoDatabase database) throws MongoException {
 		database.listCollectionNames().forEach(collection -> {
 			try {

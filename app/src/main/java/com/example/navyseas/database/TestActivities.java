@@ -22,24 +22,12 @@ public class TestActivities {
 
 		ArrayList<Activity> activity = new ArrayList<>();
 		for (Activity a : it) {
-			if (!activity.contains(a)) activity.add(a);
+			activity.add(a);
 		}
 
 		for (int i = 0; i < activity.size(); i++) {
 			System.out.println(activity.get(i).toString());
 		}
-
-		/*activities.insertOne(new Activity(new ObjectId(), "Test", "Sunday", 7, Collections.emptyList()));
-
-		it = activities.find();
-
-		for (Activity a : it) {
-			if (!activity.contains(a)) activity.add(a);
-		}
-
-		for (int i = 0; i < activity.size(); i++) {
-			System.out.println(activity.get(i).toString());
-		}*/
 	}
 
 }
