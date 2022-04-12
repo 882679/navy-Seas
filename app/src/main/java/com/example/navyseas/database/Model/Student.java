@@ -1,75 +1,99 @@
 package com.example.navyseas.database.Model;
 
+import com.example.navyseas.MainActivity;
+
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Student {
-	private ObjectId id;
-	private String name;
-	private List<Activity> activities;
+    private ObjectId id;
+    private String name;
+    private List<Activity> activities;
 
-	public Student(ObjectId id, String name, List<Activity> activities) {
-		this.id = id;
-		this.name = name;
-		this.activities = activities;
-	}
+    public Student(ObjectId id, String name, List<Activity> activities) {
+        this.id = id;
+        this.name = name;
+        this.activities = activities;
+    }
 
-	public ObjectId getId() {
-		return id;
-	}
+    public ObjectId getId() {
+        return id;
+    }
 
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
+    public void setId(ObjectId id) {
+        this.id = id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public List<Activity> getActivities() {
-		return activities;
-	}
+    public List<Activity> getActivities() {
+        return activities;
+    }
 
-	public void setActivities(List<Activity> activities) {
-		this.activities = activities;
-	}
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
 
-	@Override
-	public String toString() {
-		return "Student{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", activities=" + activities +
-				'}';
-	}
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", activities=" + activities +
+                '}';
+    }
 
-	public boolean checkActivities(Activity a, ArrayList<Student> students) {
-		return !(activities.contains(a)) && checkDay(a) && checkCapacity(a, students);
-	}
+    public boolean addActivity(Activity activity) {
+        if (checkActivities(activity, MainActivity.dataMockup.students)) {
+            this.activities.add(activity);
+            return true;
+        }
+        return false;
+    }
 
-	private boolean checkCapacity(Activity a, ArrayList<Student> students) {
-		int taken = 0;
+    public void removeActivity(int index) {
+        this.activities.remove(index);
+    }
 
-		for (int i = 0; i < students.size(); i++) {
-			for (int j = 0; j < students.get(i).getActivities().size(); j++) {
-				if (students.get(i).getActivities().get(j).getId().equals(a.getId())) taken++;
-			}
-		}
+    public boolean checkActivities(Activity a, ArrayList<Student> students) {
+        return !(activities.contains(a)) && checkDay(a) && checkCapacity(a, students);
+    }
 
-		return taken < a.getCapacity();
-	}
+    private boolean checkCapacity(Activity a, ArrayList<Student> students) {
+        int taken = 0;
 
-	private boolean checkDay(Activity a) {
-		for (int i = 0; i < activities.size(); i++) {
-			if (activities.get(i).getDay().equals(a.getDay())) return false;
-		}
+        for (int i = 0; i < students.size(); i++) {
+            for (int j = 0; j < students.get(i).getActivities().size(); j++) {
+                if (students.get(i).getActivities().get(j).getId().equals(a.getId())) taken++;
+            }
+        }
 
-		return true;
-	}
+        return taken < a.getCapacity();
+    }
+
+    private boolean checkDay(Activity a) {
+        for (int i = 0; i < activities.size(); i++) {
+            if (activities.get(i).getDay().equals(a.getDay())) return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return Objects.equals(name, student.name);
+    }
+
 }

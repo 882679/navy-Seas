@@ -10,11 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.navyseas.DataMockup;
 import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
+import com.example.navyseas.database.Model.Activity;
+import com.example.navyseas.database.Model.Reservation;
 import com.example.navyseas.database.Model.Student;
 import com.example.navyseas.databinding.ActivityMainBinding;
 import com.example.navyseas.databinding.FragmentProfileBinding;
@@ -24,6 +28,10 @@ import com.google.android.material.snackbar.Snackbar;
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private final Student selectedStudent = MainActivity.selectedStudent;
+    private final DataMockup dataMockup = MainActivity.dataMockup;
+
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +66,37 @@ public class ProfileFragment extends Fragment {
                         .setAction("Action", null).show();
             }
         });
+
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new
+                ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                        Activity activityToRemove = selectedStudent.getActivities().get(viewHolder.getAdapterPosition());
+                        selectedStudent.removeActivity(viewHolder.getAdapterPosition());
+                        for (int i = 0; i< dataMockup.reservations.size(); i++) {
+                            if (dataMockup.reservations.get(i).getStudent().equals(selectedStudent) && dataMockup.reservations.get(i).getActivity().equals(activityToRemove)){
+                                dataMockup.reservations.remove(i);
+                            }
+                        }
+                        adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                    }
+
+                    @Override
+                    public void onMoved(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, int fromPos, RecyclerView.ViewHolder target, int toPos, int x, int y) {
+                        super.onMoved(recyclerView, viewHolder, fromPos, target, toPos, x, y);
+                    }
+                };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
 
         return root;
     }

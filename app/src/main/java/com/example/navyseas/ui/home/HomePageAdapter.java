@@ -12,15 +12,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navyseas.R;
 import com.example.navyseas.database.Model.Activity;
+import com.example.navyseas.database.Model.Reservation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyViewHolder> {
 
     private final LayoutInflater inflater;
-    private final List<Activity> reservations;
+    private final ArrayList<Reservation> reservations;
 
-    public HomePageAdapter(Context context, List<Activity> reservations) {
+    public HomePageAdapter(Context context, ArrayList<Reservation> reservations) {
         inflater = LayoutInflater.from(context);
         this.reservations = reservations;
     }
@@ -35,7 +37,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull HomePageAdapter.MyViewHolder holder, int position) {
-        Activity current = reservations.get(position);
+        Reservation current = reservations.get(position);
         holder.setData(current);
     }
 
@@ -50,7 +52,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
     }
 
     // aggiunge la lista dei paesi nel recyclerview
-    public void addAll(List<Activity> list) {
+    public void addAll(ArrayList<Reservation> list) {
         reservations.addAll(list);
         notifyDataSetChanged();
     }
@@ -79,12 +81,12 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
         }
 
         // imposto le informazioni delle cards nel recyclerview
-        public void setData(Activity currentCard) {
-            this.activityName.setText(currentCard.getName());
+        public void setData(Reservation currentCard) {
+            this.activityName.setText(currentCard.getActivity().getName());
             this.imgActivity.setImageResource(R.drawable.icon_activity);
-            // this.studentName.setText(currentCard.getStudents().get(0).getName());
-            this.price.setText(""+currentCard.getPrice());
-            this.day.setText(currentCard.getDay());
+            this.studentName.setText(currentCard.getStudent().getName());
+            this.price.setText(""+currentCard.getActivity().getPrice());
+            this.day.setText(currentCard.getActivity().getDay());
         }
 
     }

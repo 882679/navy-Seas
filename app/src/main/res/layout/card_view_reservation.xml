@@ -42,15 +42,6 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/studentName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:text="Student name"
-                    android:textColor="#828282"
-                    android:textSize="18sp" />
             </LinearLayout>
 
 

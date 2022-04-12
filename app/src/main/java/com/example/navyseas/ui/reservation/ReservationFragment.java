@@ -10,9 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.navyseas.DataMockup;
 import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
 import com.example.navyseas.database.Model.Activity;
@@ -29,6 +31,8 @@ public class ReservationFragment extends Fragment {
     private FragmentReservationBinding binding;
     private final Student selectedStudent = MainActivity.selectedStudent;
 
+    private DataMockup dataMockup = MainActivity.dataMockup;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ReservationViewModel reservationViewModel =
@@ -44,9 +48,9 @@ public class ReservationFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewReservation);
 
         List<Activity> activitiesNotBooked = new ArrayList<>();
-        for (int i = 0; i < HomeFragment.dm.activityList.size(); i++){
-            if (!selectedStudent.getActivities().contains(HomeFragment.dm.activityList.get(i))){
-                activitiesNotBooked.add(HomeFragment.dm.activityList.get(i));
+        for (int i = 0; i < dataMockup.activityList.size(); i++){
+            if (!selectedStudent.getActivities().contains(dataMockup.activityList.get(i))){
+                activitiesNotBooked.add(dataMockup.activityList.get(i));
             }
         }
 

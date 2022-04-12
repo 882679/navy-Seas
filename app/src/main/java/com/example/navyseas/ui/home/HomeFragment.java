@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,19 +16,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.navyseas.DataMockup;
+import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
+import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.databinding.FragmentHomeBinding;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private SwipeRefreshLayout swipeContainer;
 
-    public static DataMockup dm;
-
+    private DataMockup dataMockup = MainActivity.dataMockup;
     private HomePageAdapter adapter;
+    private ViewGroup container;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,13 +41,12 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
-        dm = new DataMockup();
+        this.container = container;
 
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewHome);
 
-        adapter = new HomePageAdapter(container.getContext(), dm.activityList);
+        adapter = new HomePageAdapter(container.getContext(), dataMockup.reservations);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
@@ -64,11 +68,9 @@ public class HomeFragment extends Fragment {
     }
 
     public void fetchTimelineAsync() {
-        adapter.clear();
-        dm = new DataMockup();
-        adapter.addAll(dm.activityList);
         swipeContainer.setRefreshing(false);
-        Snackbar.make(swipeContainer, "Prenotazioni aggiornate", 3000).show();
+        Toast.makeText(container.getContext(), "Prenotazioni aggiornate",
+                Toast.LENGTH_LONG).show();
     }
 
     @Override
