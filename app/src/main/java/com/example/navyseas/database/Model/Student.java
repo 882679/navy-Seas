@@ -89,10 +89,8 @@ public class Student {
 
 	public void subscribe(MongoCollection<Family> familyCollection, MongoCollection<Student> studentCollection, ArrayList<Student> students, Activity a) {
 		if (this.checkActivities(a, students)) {
-			// Funziona
 			activities.add(a);
 
-			// Funziona
 			studentCollection.updateOne(
 					eq("_id", id),
 					set("activities", activities)
