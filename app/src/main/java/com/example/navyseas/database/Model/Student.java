@@ -3,6 +3,7 @@ package com.example.navyseas.database.Model;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.set;
 
+import com.example.navyseas.MainActivity;
 import com.mongodb.client.MongoCollection;
 
 import org.bson.types.ObjectId;
@@ -59,6 +60,17 @@ public class Student {
 				'}';
 	}
 
+	public boolean addActivity(Activity activity) {
+		if (checkActivities(activity, MainActivity.dataMockup.students)) {
+			this.activities.add(activity);
+			return true;
+		}
+		return false;
+	}
+
+	public void removeActivity(int index) {
+		this.activities.remove(index);
+	}
 	// Checks if specific student can subscribe to a specific activity
 	public boolean checkActivities(Activity a, ArrayList<Student> students) {
 		return !(activities.contains(a)) && checkDay(a) && checkCapacity(a, students);
