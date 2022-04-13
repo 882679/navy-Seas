@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         SubMenu menuGroup = navigationView.getMenu().addSubMenu("Figli");
         int index = 1;
         for (Student stud :
-                dataMockup.family.getStudents()) {
+                dataMockup.family.getChildren()) {
             menuGroup.add(R.id.nav_profile, index, Menu.NONE, stud.getName()).setIcon(R.drawable.ic_student);
 
             index++;

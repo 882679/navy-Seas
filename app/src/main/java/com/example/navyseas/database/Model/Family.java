@@ -1,5 +1,11 @@
 package com.example.navyseas.database.Model;
 
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.combine;
+import static com.mongodb.client.model.Updates.set;
+
+import com.mongodb.client.MongoCollection;
+
 import org.bson.types.ObjectId;
 
 import java.util.List;
@@ -62,14 +68,15 @@ public class Family {
 				'}';
 	}
 
-	public void updateAmount() {
-		amount = 0;
-
-		for (int i = 0; i < children.size(); i++) {
-			for (int j = 0; j < children.get(i).getActivities().size(); j++) {
-				amount += children.get(i).getActivities().get(j).getPrice();
-			}
-		}
+	public void updateFamily(MongoCollection<Family> familyCollection, Student s) {
+		updateChildren(s);
+		familyCollection.updateOne(
+				eq("children._id", s.getId()),
+				combine(
+						set("children", children),
+						set("amount", amount)
+				)
+		);
 	}
 
 	public void updateChildren(Student s) {
@@ -79,5 +86,15 @@ public class Family {
 		}
 
 		updateAmount();
+	}
+
+	public void updateAmount() {
+		amount = 0;
+
+		for (int i = 0; i < children.size(); i++) {
+			for (int j = 0; j < children.get(i).getActivities().size(); j++) {
+				amount += children.get(i).getActivities().get(j).getPrice();
+			}
+		}
 	}
 }

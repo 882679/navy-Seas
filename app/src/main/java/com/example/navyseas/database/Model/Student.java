@@ -1,5 +1,10 @@
 package com.example.navyseas.database.Model;
 
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.set;
+
+import com.mongodb.client.MongoCollection;
+
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -10,6 +15,7 @@ public class Student {
 	private String name;
 	private List<Activity> activities;
 
+	// Constructors
 	public Student() {
 	}
 
@@ -19,6 +25,7 @@ public class Student {
 		this.activities = activities;
 	}
 
+	// Getters & Setters
 	public ObjectId getId() {
 		return id;
 	}
@@ -52,10 +59,12 @@ public class Student {
 				'}';
 	}
 
+	// Checks if specific student can subscribe to a specific activity
 	public boolean checkActivities(Activity a, ArrayList<Student> students) {
 		return !(activities.contains(a)) && checkDay(a) && checkCapacity(a, students);
 	}
 
+	// Checks if there are "places" left for a specific activity
 	private boolean checkCapacity(Activity a, ArrayList<Student> students) {
 		int taken = 0;
 
@@ -68,11 +77,41 @@ public class Student {
 		return taken < a.getCapacity();
 	}
 
+	// Checks if the specified student is already subscribed for another
+	// activity that occurs on the same day
 	private boolean checkDay(Activity a) {
 		for (int i = 0; i < activities.size(); i++) {
 			if (activities.get(i).getDay().equals(a.getDay())) return false;
 		}
 
 		return true;
+	}
+
+	public void subscribe(MongoCollection<Family> familyCollection, MongoCollection<Student> studentCollection, ArrayList<Student> students, Activity a) {
+		if (this.checkActivities(a, students)) {
+			// Funziona
+			activities.add(a);
+
+			// Funziona
+			studentCollection.updateOne(
+					eq("_id", id),
+					set("activities", activities)
+			);
+
+			Family familyToUpdate = familyCollection.find(eq("children._id", id)).first();
+			if (familyToUpdate != null) familyToUpdate.updateFamily(familyCollection, this);
+		} else System.out.println("Error. Try again.");
+	}
+
+	public void unsubscribe(MongoCollection<Family> familyCollection, MongoCollection<Student> studentCollection, Activity a) {
+		activities.remove(a);
+
+		studentCollection.updateOne(
+				eq("_id", id),
+				set("activities", activities)
+		);
+
+		Family familyToUpdate = familyCollection.find(eq("children._id", id)).first();
+		if (familyToUpdate != null) familyToUpdate.updateFamily(familyCollection, this);
 	}
 }

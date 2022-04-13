@@ -15,21 +15,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class SubscribeToActivity {
+public class UnsubscribeTest {
 	public static void main(String[] args) {
 		MongoDatabase database = DatabaseUtility.createConnection();
 
 		MongoCollection<Student> studentCollection = database.getCollection("Student", Student.class);
-		MongoCollection<Activity> activityCollection = database.getCollection("Activity", Activity.class);
 		MongoCollection<Family> familyCollection = database.getCollection("Family", Family.class);
 
 		FindIterable<Student> iteratorStudents = studentCollection.find();
-		FindIterable<Activity> iteratorActivities = activityCollection.find();
-
-		ArrayList<Activity> activities = new ArrayList<>();
-		for (Activity a : iteratorActivities) {
-			activities.add(a);
-		}
 
 		ArrayList<Student> students = new ArrayList<>();
 		for (Student s : iteratorStudents) {
@@ -50,19 +43,19 @@ public class SubscribeToActivity {
 
 			Student studentToUpdate = students.get(indexStudent);
 
-			for (int i = 0; i < activities.size(); i++) {
-				System.out.println(i + " : " + activities.get(i).getName() + ", " + activities.get(i).getDay() + ", " + activities.get(i).getPrice());
+			for (int i = 0; i < studentToUpdate.getActivities().size(); i++) {
+				System.out.println(i + " : " + studentToUpdate.getActivities().get(i).toString());
 			}
 
 			System.out.print("Select activity (index): ");
 			int indexActivity = input.nextInt();
 			input.nextLine();
 
-			Activity activityToUpdate = activities.get(indexActivity);
+			Activity activityToUpdate = studentToUpdate.getActivities().get(indexActivity);
 
-			studentToUpdate.subscribe(familyCollection, studentCollection, students, activityToUpdate);
+			studentToUpdate.unsubscribe(familyCollection, studentCollection, activityToUpdate);
 
-			System.out.print("Subscribe another student? (Y/N): ");
+			System.out.print("Unsubscribe another student? (Y/N): ");
 			choice = input.nextLine();
 		} while (choice.equals("Y"));
 	}
