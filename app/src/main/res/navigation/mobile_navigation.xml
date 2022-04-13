@@ -14,12 +14,12 @@
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.navyseas.ui.profile.ProfileFragment"
-        android:label="@string/menu_profile"
+        android:label="@string/profile_title"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.navyseas.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_reservation"
+        android:name="com.example.navyseas.ui.reservation.ReservationFragment"
+        android:label="@string/reservation_title"
+        tools:layout="@layout/fragment_reservation" />
 </navigation>

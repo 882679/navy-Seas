@@ -3,6 +3,7 @@ package com.example.navyseas.database.Model;
 import org.bson.types.ObjectId;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Activity {
 	private ObjectId id;
@@ -72,4 +73,13 @@ public class Activity {
 				", capacity=" + capacity +
 				'}';
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Activity activity = (Activity) o;
+		return Objects.equals(name, activity.name);
+	}
+
 }

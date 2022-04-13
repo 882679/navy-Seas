@@ -1,4 +1,4 @@
-package com.example.navyseas.ui.home;
+package com.example.navyseas.ui.profile;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,17 +12,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navyseas.R;
 import com.example.navyseas.database.Model.Activity;
-import com.example.navyseas.database.Model.Reservation;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyViewHolder> {
+public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHolder> {
 
     private final LayoutInflater inflater;
-    private final ArrayList<Reservation> reservations;
+    private final List<Activity> reservations;
 
-    public HomePageAdapter(Context context, ArrayList<Reservation> reservations) {
+    public ProfileAdapter(Context context, List<Activity> reservations) {
         inflater = LayoutInflater.from(context);
         this.reservations = reservations;
     }
@@ -31,13 +29,13 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.card_view_home, parent, false);
+        View view = inflater.inflate(R.layout.card_view_profile, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HomePageAdapter.MyViewHolder holder, int position) {
-        Reservation current = reservations.get(position);
+    public void onBindViewHolder(@NonNull ProfileAdapter.MyViewHolder holder, int position) {
+        Activity current = reservations.get(position);
         holder.setData(current);
     }
 
@@ -52,13 +50,8 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
     }
 
     // aggiunge la lista dei paesi nel recyclerview
-    public void addAll(ArrayList<Reservation> list) {
+    public void addAll(List<Activity> list) {
         reservations.addAll(list);
-        notifyDataSetChanged();
-    }
-
-    public void clear() {
-        reservations.clear();
         notifyDataSetChanged();
     }
 
@@ -81,12 +74,12 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
         }
 
         // imposto le informazioni delle cards nel recyclerview
-        public void setData(Reservation currentCard) {
-            this.activityName.setText(currentCard.getActivity().getName());
+        public void setData(Activity currentCard) {
+            this.activityName.setText(currentCard.getName());
             this.imgActivity.setImageResource(R.drawable.icon_activity);
-            this.studentName.setText(currentCard.getStudent().getName());
-            this.price.setText(""+currentCard.getActivity().getPrice());
-            this.day.setText(currentCard.getActivity().getDay());
+            // this.studentName.setText(currentCard.getStudents().get(0).getName());
+            this.price.setText(currentCard.getPrice()+" €");
+            this.day.setText(currentCard.getDay());
         }
 
     }
