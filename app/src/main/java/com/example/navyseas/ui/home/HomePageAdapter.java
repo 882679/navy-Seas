@@ -11,22 +11,34 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navyseas.R;
-import com.example.navyseas.database.Model.Activity;
+import com.example.navyseas.database.Model.Family;
 import com.example.navyseas.database.Model.Reservation;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyViewHolder> {
 
     private final LayoutInflater inflater;
+    private final Family family;
+
     private final ArrayList<Reservation> reservations;
 
-    public HomePageAdapter(Context context, ArrayList<Reservation> reservations) {
+    public HomePageAdapter(Context context, Family family) {
         inflater = LayoutInflater.from(context);
-        this.reservations = reservations;
+        this.family = family;
+        reservations = setData(family);
     }
 
+    public ArrayList<Reservation> setData(Family family){
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        for (int i =0; i< family.getChildren().size(); i++){
+            for (int j = 0; j< family.getChildren().get(i).getActivities().size(); j++){
+                reservations.add(new Reservation(family.getChildren().get(i).getActivities().get(j),
+                        family.getChildren().get(i)));
+            }
+        }
+        return reservations;
+    }
 
     @NonNull
     @Override
@@ -52,8 +64,8 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
     }
 
     // aggiunge la lista dei paesi nel recyclerview
-    public void addAll(ArrayList<Reservation> list) {
-        reservations.addAll(list);
+    public void addAll(ArrayList<Family> list) {
+        reservations.addAll(setData(list.get(0)));
         notifyDataSetChanged();
     }
 

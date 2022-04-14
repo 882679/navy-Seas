@@ -15,15 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.navyseas.DataMockup;
 import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
 import com.example.navyseas.database.Model.Activity;
-import com.example.navyseas.database.Model.Reservation;
 import com.example.navyseas.database.Model.Student;
-import com.example.navyseas.ui.home.HomeFragment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.MyViewHolder> {
@@ -31,7 +27,6 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     private final LayoutInflater inflater;
     private final List<Activity> activityList;
     private final Context context;
-    private DataMockup dataMockup = MainActivity.dataMockup;
     private final Student selectedStudent = MainActivity.selectedStudent;
 
 
@@ -66,8 +61,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
                     // The dialog is automatically dismissed when a dialog button is clicked.
                     .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            if (selectedStudent.addActivity(selectedActivity)) {
-                                dataMockup.reservations.add(0, new Reservation(selectedActivity, selectedStudent));
+                            if (selectedStudent.subscribe(MainActivity.familyCollection, MainActivity.studentCollection, MainActivity.students, selectedActivity)) {
                                 navController.navigate(R.id.nav_profile);
                             } else {
                                 Toast.makeText(context.getApplicationContext(), "Errore! " + selectedStudent.getName() + " quel giorno è già impegnato.",

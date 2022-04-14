@@ -8,7 +8,9 @@ import com.mongodb.client.MongoCollection;
 
 import org.bson.types.ObjectId;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class Student {
@@ -60,17 +62,6 @@ public class Student {
 				'}';
 	}
 
-	public boolean addActivity(Activity activity) {
-		if (checkActivities(activity, MainActivity.dataMockup.students)) {
-			this.activities.add(activity);
-			return true;
-		}
-		return false;
-	}
-
-	public void removeActivity(int index) {
-		this.activities.remove(index);
-	}
 	// Checks if specific student can subscribe to a specific activity
 	public boolean checkActivities(Activity a, ArrayList<Student> students) {
 		return !(activities.contains(a)) && checkDay(a) && checkCapacity(a, students);
@@ -99,7 +90,7 @@ public class Student {
 		return true;
 	}
 
-	public void subscribe(MongoCollection<Family> familyCollection, MongoCollection<Student> studentCollection, ArrayList<Student> students, Activity a) {
+	public boolean subscribe(MongoCollection<Family> familyCollection, MongoCollection<Student> studentCollection, ArrayList<Student> students, Activity a) {
 		if (this.checkActivities(a, students)) {
 			activities.add(a);
 
@@ -110,10 +101,16 @@ public class Student {
 
 			Family familyToUpdate = familyCollection.find(eq("children._id", id)).first();
 			if (familyToUpdate != null) familyToUpdate.updateFamily(familyCollection, this);
-		} else System.out.println("Error. Try again.");
+		} else {
+			return false;
+		}
+		return true;
 	}
 
 	public void unsubscribe(MongoCollection<Family> familyCollection, MongoCollection<Student> studentCollection, Activity a) {
+		String day = LocalDate.now().getDayOfWeek().name();
+		System.out.println("GIORNO: "+ day);
+		if (a.getDay() == day)
 		activities.remove(a);
 
 		studentCollection.updateOne(

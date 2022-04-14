@@ -28,7 +28,6 @@ import com.google.android.material.snackbar.Snackbar;
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private final Student selectedStudent = MainActivity.selectedStudent;
-    private final DataMockup dataMockup = MainActivity.dataMockup;
 
 
 
@@ -79,12 +78,7 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                         Activity activityToRemove = selectedStudent.getActivities().get(viewHolder.getAdapterPosition());
-                        selectedStudent.removeActivity(viewHolder.getAdapterPosition());
-                        for (int i = 0; i< dataMockup.reservations.size(); i++) {
-                            if (dataMockup.reservations.get(i).getStudent().equals(selectedStudent) && dataMockup.reservations.get(i).getActivity().equals(activityToRemove)){
-                                dataMockup.reservations.remove(i);
-                            }
-                        }
+                        selectedStudent.unsubscribe(MainActivity.familyCollection, MainActivity.studentCollection, activityToRemove);
                         adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
                     }
 

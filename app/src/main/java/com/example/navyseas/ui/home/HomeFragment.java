@@ -19,20 +19,25 @@ import com.example.navyseas.DataMockup;
 import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
 import com.example.navyseas.database.Model.Activity;
+import com.example.navyseas.database.Model.Family;
 import com.example.navyseas.databinding.FragmentHomeBinding;
 import com.google.android.material.color.MaterialColors;
 import com.google.android.material.snackbar.Snackbar;
+import com.mongodb.client.MongoCollection;
+
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private SwipeRefreshLayout swipeContainer;
-
-    private DataMockup dataMockup = MainActivity.dataMockup;
     private HomePageAdapter adapter;
     private ViewGroup container;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +51,7 @@ public class HomeFragment extends Fragment {
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewHome);
 
-        adapter = new HomePageAdapter(container.getContext(), dataMockup.reservations);
+        adapter = new HomePageAdapter(container.getContext(), new Family(new ObjectId(), "test", Collections.emptyList(), 1.0));
 
         recyclerView.setAdapter(adapter);
         recyclerView.setHasFixedSize(true);
