@@ -43,7 +43,7 @@ public class ReservationFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textProfile;
-        textView.setText("Attività non prenotate da "+selectedStudent.getName()+":");
+        textView.setText("Nuova prenotazione per "+selectedStudent.getName()+":");
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewReservation);
 

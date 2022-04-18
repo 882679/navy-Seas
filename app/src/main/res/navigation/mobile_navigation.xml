@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/nav_profile"
         android:name="com.example.navyseas.ui.profile.ProfileFragment"
-        android:label="@string/action_settings"
+        android:label="@string/profile_title"
         tools:layout="@layout/fragment_profile" />
 
     <fragment

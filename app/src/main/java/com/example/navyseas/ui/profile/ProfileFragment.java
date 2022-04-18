@@ -49,7 +49,7 @@ public class ProfileFragment extends Fragment {
         this.container = container;
 
         final TextView textView = binding.textProfile;
-        textView.setText("Profilo di "+selectedStudent.getName());
+        textView.setText("Attività di "+selectedStudent.getName()+":");
 
         recyclerView = root.findViewById(R.id.recyclerViewProfile);
 
