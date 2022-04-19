@@ -5,7 +5,7 @@ import org.bson.types.ObjectId;
 import java.util.Objects;
 
 public class Activity {
-	private ObjectId id;
+	private int id;
 	private String name;
 	private String day;
 	private double price;
@@ -14,7 +14,7 @@ public class Activity {
 	public Activity() {
 	}
 
-	public Activity(ObjectId id, String name, String day, double price, int capacity) {
+	public Activity(int id, String name, String day, double price, int capacity) {
 		this.id = id;
 		this.name = name;
 		this.day = day;
@@ -22,11 +22,11 @@ public class Activity {
 		this.capacity = capacity;
 	}
 
-	public ObjectId getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
