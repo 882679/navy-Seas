@@ -53,13 +53,13 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
-        try {
+        /*try {
             database = new SQLHelper();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        /*try {
+        try {
             ResultSet ris = database.executeQuery("SELECT * FROM family"); //verifica che nel database l'utente sia già registrato
             if (ris.next()) { //il primo valore è antecedente a valori del resultset, perciò se questo valore è l'ultimo il risultato è vuoto
                 System.out.println(ris.getString("name"));
