@@ -22,12 +22,12 @@ public class TestReservation extends TestCase {
 
     public void setUp() {
 
-        activityList.add(new Activity(new ObjectId(), "Scacchi", "Lunedi", 8, 20));
-        activityList.add(new Activity(new ObjectId(), "Lettura", "Martedi", 5, 30));
-        activityList.add(new Activity(new ObjectId(), "Disegno", "Mercoledi", 7, 10));
-        activityList.add(new Activity(new ObjectId(), "Pallavolo", "Giovedi", 10, 50));
-        activityList.add(new Activity(new ObjectId(), "Calcio", "Venerdi", 15, 20));
-        activityList.add(new Activity(new ObjectId(), "Aiuto Compiti", "Lunedi", 10, 60));
+        activityList.add(new Activity(1, "Scacchi", "Lunedi", 8, 20));
+        activityList.add(new Activity(2, "Lettura", "Martedi", 5, 30));
+        activityList.add(new Activity(3, "Disegno", "Mercoledi", 7, 10));
+        activityList.add(new Activity(4, "Pallavolo", "Giovedi", 10, 50));
+        activityList.add(new Activity(5, "Calcio", "Venerdi", 15, 20));
+        activityList.add(new Activity(6, "Aiuto Compiti", "Lunedi", 10, 60));
 
         activityListAlvise.add(activityList.get(0));
         activityListAlvise.add(activityList.get(1));
@@ -68,7 +68,7 @@ public class TestReservation extends TestCase {
     }
 
     public void testBookingActivity() {
-        Activity activity = new Activity(new ObjectId(), "Calcio", "Venerdi", 15, 20);
+        Activity activity = new Activity(5, "Calcio", "Venerdi", 15, 20);
         boolean found = false;
         try {
             for (Reservation reservation :

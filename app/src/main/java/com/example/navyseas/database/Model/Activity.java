@@ -11,9 +11,6 @@ public class Activity {
 	private double price;
 	private int capacity;
 
-	public Activity() {
-	}
-
 	public Activity(int id, String name, String day, double price, int capacity) {
 		this.id = id;
 		this.name = name;

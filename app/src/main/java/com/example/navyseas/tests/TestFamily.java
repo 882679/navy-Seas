@@ -20,7 +20,7 @@ public class TestFamily extends TestCase {
     ArrayList<Activity> activityList = new ArrayList<>();
     public void setUp() {
 
-        activityList.add(new Activity(new ObjectId(), "Scacchi", "Lunedi", 8, 20));
+        activityList.add(new Activity(1, "Scacchi", "Lunedi", 8, 20));
 
         ArrayList<Activity> activityListAlvise = new ArrayList<>();
         activityListAlvise.add(activityList.get(0));
