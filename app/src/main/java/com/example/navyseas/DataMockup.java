@@ -18,12 +18,12 @@ public class DataMockup {
     public Family family;
 
     public DataMockup() {
-        activityList.add(new Activity(new ObjectId(), "Scacchi", "Lunedi", 8, 20));
-        activityList.add(new Activity(new ObjectId(), "Lettura", "Martedi", 5, 30));
-        activityList.add(new Activity(new ObjectId(), "Disegno", "Mercoledi", 7, 10));
-        activityList.add(new Activity(new ObjectId(), "Pallavolo", "Giovedi", 10, 50));
-        activityList.add(new Activity(new ObjectId(), "Calcio", "Venerdi", 15, 20));
-        activityList.add(new Activity(new ObjectId(), "Aiuto Compiti", "Lunedi", 10, 60));
+        activityList.add(new Activity(1, "Scacchi", "Lunedi", 8, 20));
+        activityList.add(new Activity(2, "Lettura", "Martedi", 5, 30));
+        activityList.add(new Activity(3, "Disegno", "Mercoledi", 7, 10));
+        activityList.add(new Activity(4, "Pallavolo", "Giovedi", 10, 50));
+        activityList.add(new Activity(5, "Calcio", "Venerdi", 15, 20));
+        activityList.add(new Activity(6, "Aiuto Compiti", "Lunedi", 10, 60));
 
         ArrayList<Activity> activityListAlvise = new ArrayList<>();
         activityListAlvise.add(activityList.get(0));

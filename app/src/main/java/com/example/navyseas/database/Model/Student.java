@@ -89,7 +89,7 @@ public class Student {
 
 		for (int i = 0; i < students.size(); i++) {
 			for (int j = 0; j < students.get(i).getActivities().size(); j++) {
-				if (students.get(i).getActivities().get(j).getId().equals(a.getId())) taken++;
+				if (students.get(i).getActivities().get(j).getId() == (a.getId())) taken++;
 			}
 		}
 

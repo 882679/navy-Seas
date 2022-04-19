@@ -6,6 +6,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.navyseas.database.DBHelper;
 import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Student;
 import com.example.navyseas.database.SQLHelper;
@@ -23,6 +24,7 @@ import com.example.navyseas.databinding.ActivityMainBinding;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
     public static NavController navController;
     public static DataMockup dataMockup = new DataMockup();
     public static Student selectedStudent;
-
-    private static SQLHelper database;
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -53,21 +53,17 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
 
-        /*try {
-            database = new SQLHelper();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        DBHelper dbHelper = new DBHelper(MainActivity.this);
+
+        Activity a = new Activity(1, "Chess", "Monday", 9.5, 10);
+
+        dbHelper.addData(a);
+
+        List<Activity> l = dbHelper.getData();
+
+        for (int i = 0; i < l.size(); i++) {
+            System.out.println(l);
         }
-
-        try {
-            ResultSet ris = database.executeQuery("SELECT * FROM family"); //verifica che nel database l'utente sia già registrato
-            if (ris.next()) { //il primo valore è antecedente a valori del resultset, perciò se questo valore è l'ultimo il risultato è vuoto
-                System.out.println(ris.getString("name"));
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-        }*/
-
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_profile)
