@@ -1,21 +1,19 @@
-package com.example.navyseas;
+package com.example.navyseas.tests;
 
 import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Family;
 import com.example.navyseas.database.Model.Student;
-import static org.junit.Assert.*;
 
 import junit.framework.TestCase;
 
 import org.bson.types.ObjectId;
-import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestActivity extends TestCase {
     public ArrayList<Activity> activityList = new ArrayList<>();
-    @Test
+
     public void setUp() {
         activityList.add(new Activity(1, "Scacchi", "Lunedi", 8, 20));
         activityList.add(new Activity(2, "Lettura", "Martedi", 5, 30));
@@ -24,7 +22,7 @@ public class TestActivity extends TestCase {
         activityList.add(new Activity(5, "Calcio", "Venerdi", 15, 20));
         activityList.add(new Activity(6, "Aiuto Compiti", "Lunedi", 10, 60));
     }
-    @Test
+
     public void testActivityList() {
         Activity activity = new Activity(1, "Scacchi", "Lunedi", 8, 20);
         try {
@@ -33,7 +31,7 @@ public class TestActivity extends TestCase {
             e.printStackTrace();
         }
     }
-    @Test
+
     public void testDay() {
         String day = "Martedi";
         try {
@@ -42,7 +40,7 @@ public class TestActivity extends TestCase {
             e.printStackTrace();
         }
     }
-    @Test
+
     public void testCapacityVolleyball() {
         int c = 50;
         try {
