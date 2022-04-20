@@ -31,19 +31,19 @@ public class DataMockup {
         activityListAlvise.add(activityList.get(2));
 
         ArrayList<Activity> activityListAngelo = new ArrayList<>();
-        activityListAngelo.add(activityList.get(1));
-        activityListAngelo.add(activityList.get(2));
+        activityListAngelo.add(activityList.get(5));
+        activityListAngelo.add(activityList.get(4));
         activityListAngelo.add(activityList.get(3));
 
         ArrayList<Activity> activityListAlessandro = new ArrayList<>();
-        activityListAlessandro.add(activityList.get(2));
-        activityListAlessandro.add(activityList.get(3));
+        activityListAlessandro.add(activityList.get(0));
         activityListAlessandro.add(activityList.get(4));
+        activityListAlessandro.add(activityList.get(5));
 
         ArrayList<Activity> activityListGiulia = new ArrayList<>();
         activityListGiulia.add(activityList.get(3));
+        activityListGiulia.add(activityList.get(1));
         activityListGiulia.add(activityList.get(4));
-        activityListGiulia.add(activityList.get(5));
 
         students.add(new Student(new ObjectId(), "Alvise", activityListAlvise));
         students.add(new Student(new ObjectId(),"Angelo", activityListAngelo));

@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 return R.drawable.knight;
             case "Lettura":
                 return R.drawable.reading2;
-            case "Aiuto compiti":
+            case "Aiuto Compiti":
                 return R.drawable.homework;
             case "Disegno":
                 return R.drawable.draw2;
