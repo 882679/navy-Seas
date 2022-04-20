@@ -1,4 +1,4 @@
-package com.example.navyseas.tests;
+package com.example.navyseas;
 
 import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Family;
@@ -8,6 +8,7 @@ import com.example.navyseas.database.Model.Student;
 import junit.framework.TestCase;
 
 import org.bson.types.ObjectId;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,7 @@ public class TestReservation extends TestCase {
     public ArrayList<Student> students = new ArrayList<>();
     ArrayList<Activity> activityListAlvise = new ArrayList<>();
     ArrayList<Activity> activityListAngelo = new ArrayList<>();
-
+    @Test
     public void setUp() {
 
         activityList.add(new Activity(1, "Scacchi", "Lunedi", 8, 20));
@@ -50,7 +51,7 @@ public class TestReservation extends TestCase {
             }
         }
     }
-
+    @Test
     public void testBookingStudent() {
         Student student = new Student(new ObjectId(), "Alvise", activityListAlvise);
         boolean found = false;
@@ -66,7 +67,7 @@ public class TestReservation extends TestCase {
             e.printStackTrace();
         }
     }
-
+    @Test
     public void testBookingActivity() {
         Activity activity = new Activity(5, "Calcio", "Venerdi", 15, 20);
         boolean found = false;

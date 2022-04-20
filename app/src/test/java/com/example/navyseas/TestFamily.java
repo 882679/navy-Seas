@@ -1,4 +1,4 @@
-package com.example.navyseas.tests;
+package com.example.navyseas;
 
 import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Family;
@@ -18,6 +18,7 @@ import java.util.List;
 public class TestFamily extends TestCase {
     Family f;
     ArrayList<Activity> activityList = new ArrayList<>();
+    @Test
     public void setUp() {
 
         activityList.add(new Activity(1, "Scacchi", "Lunedi", 8, 20));
@@ -38,7 +39,7 @@ public class TestFamily extends TestCase {
 
         f = new Family(new ObjectId(), "Carraro", studentList, 50.0);
     }
-
+    @Test
     public void testFamilyName() {
         String cognome = "Carraro";
         try {
@@ -47,7 +48,7 @@ public class TestFamily extends TestCase {
             e.printStackTrace();
         }
     }
-
+    @Test
     public void testStudent() {
         String name = "Alvise";
         try {
@@ -56,7 +57,7 @@ public class TestFamily extends TestCase {
             e.printStackTrace();
         }
     }
-
+    @Test
     public void testStudentActivity() {
         try {
             assertEquals(activityList.get(0).getName(), f.getChildren().get(0).getActivities().get(0).getName());

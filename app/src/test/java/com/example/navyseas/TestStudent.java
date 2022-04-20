@@ -1,4 +1,4 @@
-package com.example.navyseas.tests;
+package com.example.navyseas;
 
 import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Family;
@@ -7,6 +7,7 @@ import com.example.navyseas.database.Model.Student;
 import junit.framework.TestCase;
 
 import org.bson.types.ObjectId;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class TestStudent extends TestCase {
         student = new Student(new ObjectId(), "Alvise", activityListAlvise);
 
     }
-
+    @Test
     public void testStudentName() {
         String nome = "Alvise";
         try {
@@ -40,7 +41,7 @@ public class TestStudent extends TestCase {
             e.printStackTrace();
         }
     }
-
+    @Test
     public void testStudentActivities1() {
         Activity activity = new Activity(1, "Disegno", "Mercoledi", 7, 10);
         try {
@@ -49,7 +50,7 @@ public class TestStudent extends TestCase {
             e.printStackTrace();
         }
     }
-
+    @Test
     public void testStudentActivities2() {
         Activity activity = new Activity(6, "Aiuto Compiti", "Lunedi", 10, 60);
         try {
