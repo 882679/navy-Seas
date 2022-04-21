@@ -5,14 +5,14 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class ReservationViewModel extends ViewModel {
-    private final MutableLiveData<String> mText;
+	private final MutableLiveData<String> mText;
 
-    public ReservationViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is profile");
-    }
+	public ReservationViewModel() {
+		mText = new MutableLiveData<>();
+		mText.setValue("This is profile");
+	}
 
-    public LiveData<String> getText() {
-        return mText;
-    }
+	public LiveData<String> getText() {
+		return mText;
+	}
 }

@@ -16,80 +16,75 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.example.navyseas.DataMockup;
 import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
+import com.example.navyseas.database.DBHelper;
 import com.example.navyseas.database.Model.Activity;
+import com.example.navyseas.database.Model.Family;
 import com.example.navyseas.database.Model.Reservation;
+import com.example.navyseas.database.Model.Student;
 import com.example.navyseas.databinding.FragmentHomeBinding;
-import com.google.android.material.color.MaterialColors;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+	private Family selectedFamily;
+	private FragmentHomeBinding binding;
+	private SwipeRefreshLayout swipeContainer;
+	private HomePageAdapter adapter;
+	private ViewGroup container;
+	private DBHelper db;
 
-    private FragmentHomeBinding binding;
-    private SwipeRefreshLayout swipeContainer;
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		HomeViewModel homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
-    private DataMockup dataMockup = MainActivity.dataMockup;
-    private HomePageAdapter adapter;
-    private ViewGroup container;
+		binding = FragmentHomeBinding.inflate(inflater, container, false);
+		View root = binding.getRoot();
+		this.container = container;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+		db = new DBHelper(container.getContext());
+		ArrayList<Family> f = db.getFamilies();
+		selectedFamily = f.get(0);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-        this.container = container;
+		RecyclerView recyclerView = root.findViewById(R.id.recyclerViewHome);
 
+		adapter = new HomePageAdapter(container.getContext(), selectedFamily);
 
-        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewHome);
+		recyclerView.setAdapter(adapter);
+		recyclerView.setHasFixedSize(true);
 
-        adapter = new HomePageAdapter(container.getContext(), dataMockup.reservations);
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+		linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
+		recyclerView.setLayoutManager(linearLayoutManager);
+		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+		// Implementa la pull-to-refresh feature
+		swipeContainer = root.findViewById(R.id.swipeContainerHome);
+		swipeContainer.setOnRefreshListener(this::fetchTimelineAsync);
 
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+		// Refreshing colors
+		swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
 
-        // implementa la pull-to-refresh feature
-        swipeContainer = root.findViewById(R.id.swipeContainerHome);
-        swipeContainer.setOnRefreshListener(() -> fetchTimelineAsync());
+		TextView amountTextView = root.findViewById(R.id.amount);
 
-        // Refreshing colors
-        swipeContainer.setColorSchemeResources(android.R.color.holo_orange_dark);
+		amountTextView.setText(String.format("Totale: %s €", db.getFamilyAmount(selectedFamily)));
 
-        TextView amountTextView = root.findViewById(R.id.amount);
-        double amount = 0;
-        for (Reservation r :
-                dataMockup.reservations) {
-            amount += r.getActivity().getPrice();
-        }
-        amountTextView.setText("Totale: "+ amount + "0 €");
+		return root;
+	}
 
-        return root;
-    }
+	public void fetchTimelineAsync() {
+		swipeContainer.setRefreshing(false);
+		Toast.makeText(container.getContext(), "Prenotazioni aggiornate", Toast.LENGTH_LONG).show();
+	}
 
-    public void fetchTimelineAsync() {
-        swipeContainer.setRefreshing(false);
-        Toast.makeText(container.getContext(), "Prenotazioni aggiornate",
-                Toast.LENGTH_LONG).show();
-    }
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		binding = null;
+	}
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-    }
+	@Override
+	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+	}
 }

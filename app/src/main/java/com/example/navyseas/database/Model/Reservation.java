@@ -2,28 +2,28 @@ package com.example.navyseas.database.Model;
 
 public class Reservation {
 
-    private Activity activity;
-    private Student student;
+    private int studentID;
+    private int activityID;
 
-
-    public Reservation(Activity activity, Student student) {
-        this.activity = activity;
-        this.student = student;
+    public Reservation(int studentID, int activityID) {
+        this.studentID = studentID;
+        this.activityID = activityID;
     }
 
-    public Activity getActivity() {
-        return activity;
+    public int getStudentID() {
+        return studentID;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
     }
 
-    public Student getStudent() {
-        return student;
+    public int getActivityID() {
+        return activityID;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setActivityID(int activityID) {
+        this.activityID = activityID;
     }
+
 }

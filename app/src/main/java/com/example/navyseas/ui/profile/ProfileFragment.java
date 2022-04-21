@@ -15,145 +15,117 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.navyseas.DataMockup;
 import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
+import com.example.navyseas.database.DBHelper;
 import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Reservation;
 import com.example.navyseas.database.Model.Student;
-import com.example.navyseas.databinding.ActivityMainBinding;
 import com.example.navyseas.databinding.FragmentProfileBinding;
-import com.example.navyseas.ui.home.HomeFragment;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+
 public class ProfileFragment extends Fragment {
-    private FragmentProfileBinding binding;
-    private final Student selectedStudent = MainActivity.selectedStudent;
-    private final DataMockup dataMockup = MainActivity.dataMockup;
-    private ProfileAdapter adapter;
-    private LinearLayoutManager linearLayoutManager;
-    private View root;
-    private RecyclerView recyclerView;
-    private ViewGroup container;
-    private TextView amountTextView;
-    private double amount;
+	private final Student selectedStudent = MainActivity.selectedStudent;
+	private FragmentProfileBinding binding;
+	private ProfileAdapter adapter;
+	private LinearLayoutManager linearLayoutManager;
+	private View root;
+	private RecyclerView recyclerView;
+	private ViewGroup container;
+	private TextView amountTextView;
+	private double amount;
+	private DBHelper db;
+	private ArrayList<Reservation> studentReservations;
+	private ArrayList<Activity> studentActivities;
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        ProfileViewModel profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
+	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		ProfileViewModel profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
 
+		binding = FragmentProfileBinding.inflate(inflater, container, false);
+		root = binding.getRoot();
+		this.container = container;
 
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
-        root = binding.getRoot();
-        this.container = container;
+		db = new DBHelper(container.getContext());
 
-        final TextView textView = binding.textProfile;
-        textView.setText("Attività di "+selectedStudent.getName()+":");
+		studentReservations = db.getStudentReservations(selectedStudent);
+		studentActivities = db.getStudentActivities(selectedStudent);
 
-        recyclerView = root.findViewById(R.id.recyclerViewProfile);
+		final TextView textView = binding.textProfile;
+		textView.setText(String.format("Attività di %s:", selectedStudent.getName()));
 
-        adapter = new ProfileAdapter(container.getContext(), selectedStudent.getActivities());
+		recyclerView = root.findViewById(R.id.recyclerViewProfile);
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setHasFixedSize(true);
+		adapter = new ProfileAdapter(container.getContext(), studentActivities);
 
-        linearLayoutManager = new LinearLayoutManager(getActivity());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+		recyclerView.setAdapter(adapter);
+		recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+		linearLayoutManager = new LinearLayoutManager(getActivity());
+		linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        enableSwipeToDeleteAndUndo();
+		recyclerView.setLayoutManager(linearLayoutManager);
+		recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        binding.fabAddReservation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.navController.navigate(R.id.nav_reservation);
-                Snackbar.make(view, "Prenotazione nuova attività", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+		enableSwipeToDeleteAndUndo();
 
+		binding.fabAddReservation.setOnClickListener(view -> {
+			MainActivity.navController.navigate(R.id.nav_reservation);
+			Snackbar.make(view, "Prenotazione nuova attività", Snackbar.LENGTH_LONG)
+					.setAction("Action", null).show();
+		});
 
-        amountTextView = root.findViewById(R.id.amount);
-        amount = 0;
-        for (Activity a :
-                selectedStudent.getActivities()) {
-            amount += a.getPrice();
-        }
-        amountTextView.setText("Totale: "+ amount + "0 €");
+		amountTextView = root.findViewById(R.id.amount);
+		amountTextView.setText(String.format("Totale: %s €", db.getStudentAmount(selectedStudent)));
 
-        return root;
-    }
+		return root;
+	}
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		binding = null;
+	}
 
+	private void enableSwipeToDeleteAndUndo() {
+		SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(container.getContext()) {
+			@Override
+			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+				final int position = viewHolder.getAdapterPosition();
+				final Activity activityToRemove = adapter.getData().get(position);
 
-    private void enableSwipeToDeleteAndUndo() {
-        SwipeToDeleteCallback swipeToDeleteCallback = new SwipeToDeleteCallback(container.getContext()) {
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+				db.unsubscribe(selectedStudent.getId(), activityToRemove.getId());
+				studentActivities = db.getStudentActivities(selectedStudent);
 
+				resizeRecyclerView();
+				amountTextView.setText(String.format("Totale: %s €", db.getStudentAmount(selectedStudent)));
+				adapter.removeItem(position);
 
-                final int position = viewHolder.getAdapterPosition();
-                final Activity activityToRemove = adapter.getData().get(position);
+				Snackbar snackbar = Snackbar.make(root, "La prenotazione è stata eliminata.", Snackbar.LENGTH_LONG);
+				snackbar.setAction("ANNULLA", view -> {
+					db.subscribe(selectedStudent.getId(), activityToRemove.getId());
+					studentReservations = db.getStudentReservations(selectedStudent);
+					studentActivities = db.getStudentActivities(selectedStudent);
 
-                amount -= selectedStudent.getActivities().get(viewHolder.getAdapterPosition()).getPrice();
-                updateAmount(amount);
-                resizeRecyclerView();
+					adapter.restoreItem(activityToRemove, position);
 
+					amountTextView.setText(String.format("Totale: %s €", db.getStudentAmount(selectedStudent)));
+					resizeRecyclerView();
+				});
 
-                selectedStudent.removeActivity(viewHolder.getAdapterPosition());
-                int pos=0;
-                for (int j = 0; j< dataMockup.reservations.size(); j++) {
-                    if (dataMockup.reservations.get(j).getStudent().equals(selectedStudent) && dataMockup.reservations.get(j).getActivity().equals(activityToRemove)){
-                        dataMockup.reservations.remove(j);
-                        pos=j;
-                        break;
-                    }
-                }
-                adapter.removeItem(position);
+				snackbar.setActionTextColor(Color.YELLOW);
+				snackbar.show();
+			}
+		};
 
+		ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
+		itemTouchhelper.attachToRecyclerView(recyclerView);
+	}
 
-                Snackbar snackbar = Snackbar
-                        .make(root, "La prenotazione è stata eliminata.", Snackbar.LENGTH_LONG);
-                int finalJ = pos;
-                snackbar.setAction("ANNULLA", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        adapter.restoreItem(activityToRemove, position);
-                        recyclerView.scrollToPosition(position);
-                        selectedStudent.getActivities().add(position, activityToRemove);
-                        dataMockup.reservations.add(finalJ, new Reservation(activityToRemove, selectedStudent));
-                        amount += activityToRemove.getPrice();
-                        updateAmount(amount);
-                        resizeRecyclerView();
-                    }
-                });
-
-                snackbar.setActionTextColor(Color.YELLOW);
-                snackbar.show();
-
-            }
-        };
-
-        ItemTouchHelper itemTouchhelper = new ItemTouchHelper(swipeToDeleteCallback);
-        itemTouchhelper.attachToRecyclerView(recyclerView);
-    }
-
-    private void resizeRecyclerView(){
-        ViewGroup.LayoutParams params=recyclerView.getLayoutParams();
-        params.height=ViewGroup.LayoutParams.WRAP_CONTENT;
-        recyclerView.setLayoutParams(params);
-    }
-
-    private void updateAmount(double price){
-        amountTextView.setText("Totale: "+ price + "0 €");
-    }
-
+	private void resizeRecyclerView() {
+		ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+		params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+		recyclerView.setLayoutParams(params);
+	}
 }

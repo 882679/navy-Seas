@@ -1,37 +1,27 @@
 package com.example.navyseas.database.Model;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Updates.set;
-
-import com.example.navyseas.MainActivity;
-import com.mongodb.client.MongoCollection;
-
-import org.bson.types.ObjectId;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Student {
-	private ObjectId id;
+	private int id;
 	private String name;
-	private List<Activity> activities;
+	private int familyID;
 
 	// Constructors
 	public Student() {
 	}
 
-	public Student(ObjectId id, String name, List<Activity> activities) {
+	public Student(int id, String name, int familyID) {
 		this.id = id;
 		this.name = name;
-		this.activities = activities;
+		this.familyID = familyID;
 	}
 
-	// Getters & Setters
-	public ObjectId getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -43,12 +33,12 @@ public class Student {
 		this.name = name;
 	}
 
-	public List<Activity> getActivities() {
-		return activities;
+	public int getFamilyID() {
+		return familyID;
 	}
 
-	public void setActivities(List<Activity> activities) {
-		this.activities = activities;
+	public void setFamilyID(int familyID) {
+		this.familyID = familyID;
 	}
 
 	@Override
@@ -56,11 +46,11 @@ public class Student {
 		return "Student{" +
 				"id=" + id +
 				", name='" + name + '\'' +
-				", activities=" + activities +
+				", familyID=" + familyID +
 				'}';
 	}
 
-	public boolean isBusy(Activity activity) {
+	/*public boolean isBusy(Activity activity) {
 		if (checkActivities(activity, MainActivity.dataMockup.students)) {
 			return true;
 		}
@@ -130,5 +120,5 @@ public class Student {
 
 		Family familyToUpdate = familyCollection.find(eq("children._id", id)).first();
 		if (familyToUpdate != null) familyToUpdate.updateFamily(familyCollection, this);
-	}
+	}*/
 }
