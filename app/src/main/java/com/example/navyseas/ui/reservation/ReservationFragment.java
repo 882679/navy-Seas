@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,42 +20,40 @@ import com.example.navyseas.database.Model.Student;
 import com.example.navyseas.databinding.FragmentReservationBinding;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ReservationFragment extends Fragment {
 	private final Student selectedStudent = MainActivity.selectedStudent;
 	private FragmentReservationBinding binding;
-	private DBHelper db;
-	private ArrayList<Activity> studentActivities;
-	private ArrayList<Activity> activities;
 
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		ReservationViewModel reservationViewModel = new ViewModelProvider(this).get(ReservationViewModel.class);
-
 		binding = FragmentReservationBinding.inflate(inflater, container, false);
 		View root = binding.getRoot();
 
-		db = new DBHelper(container.getContext());
-		studentActivities = db.getStudentActivities(selectedStudent);
-		activities = db.getActivities();
+		DBHelper database = new DBHelper(container.getContext());
+		ArrayList<Activity> studentActivities = database.getActivities(selectedStudent);
+		ArrayList<Activity> activities = database.getActivities();
+		ArrayList<Activity> activitiesNotBooked = new ArrayList<>();
+
+		for (int i = 0; i < activities.size(); i++) {
+			boolean flag = true;
+			for (int j = 0; j < studentActivities.size(); j++) {
+				if (studentActivities.get(j).getId() == activities.get(i).getId()) flag = false;
+			}
+
+			if (flag) activitiesNotBooked.add(activities.get(i));
+		}
 
 		final TextView textView = binding.textProfile;
 		textView.setText(String.format("Nuova prenotazione per %s:", selectedStudent.getName()));
 
 		RecyclerView recyclerView = root.findViewById(R.id.recyclerViewReservation);
 
-		ArrayList<Activity> activitiesNotBooked = new ArrayList<>();
-		for (int i = 0; i < activities.size(); i++) {
-			if (!studentActivities.contains(activities.get(i)))
-				activitiesNotBooked.add(activities.get(i));
-		}
-
 		ReservationAdapter adapter = new ReservationAdapter(
 				container.getContext(),
 				activitiesNotBooked,
 				selectedStudent,
 				studentActivities,
-				db
+				database
 		);
 
 		recyclerView.setAdapter(adapter);

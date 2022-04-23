@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.navyseas.R;
 
 abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
-
 	private final Paint mClearPaint;
 	private final ColorDrawable mBackground;
 	private final int backgroundColor;
@@ -34,6 +33,7 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
 		mClearPaint = new Paint();
 		mClearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
 		deleteDrawable = ContextCompat.getDrawable(mContext, R.drawable.baseline_delete_white_24dp);
+		assert deleteDrawable != null;
 		intrinsicWidth = deleteDrawable.getIntrinsicWidth();
 		intrinsicHeight = deleteDrawable.getIntrinsicHeight();
 	}
@@ -68,7 +68,7 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
 			clearCanvas(c, itemView.getRight() + dX, (float) itemView.getTop(),
 					(float) itemView.getRight(), (float) itemView.getBottom());
 			super.onChildDraw(c, recyclerView, viewHolder,
-					dX, dY, actionState, isCurrentlyActive);
+					dX, dY, actionState, false);
 			return;
 		}
 

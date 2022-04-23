@@ -17,7 +17,6 @@ import com.example.navyseas.database.Model.Activity;
 import java.util.ArrayList;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHolder> {
-
 	private final LayoutInflater inflater;
 	private final ArrayList<Activity> activities;
 
@@ -68,16 +67,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
 		super.onAttachedToRecyclerView(recyclerView);
 	}
 
-	public void addAll(ArrayList<Activity> list) {
-		activities.addAll(list);
-		notifyDataSetChanged();
-	}
-
-
 	static class MyViewHolder extends RecyclerView.ViewHolder {
-
 		private final TextView activityName;
-		private final TextView studentName;
 		private final TextView price;
 		private final TextView day;
 		private final ImageView imgActivity;
@@ -85,7 +76,6 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
 		public MyViewHolder(View itemView) {
 			super(itemView);
 			activityName = itemView.findViewById(R.id.activityName);
-			studentName = itemView.findViewById(R.id.studentName);
 			price = itemView.findViewById(R.id.expenses);
 			day = itemView.findViewById(R.id.weekDay);
 			imgActivity = itemView.findViewById(R.id.imageView);

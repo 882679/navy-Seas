@@ -24,7 +24,6 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
 	public static NavController navController;
 	public static Student selectedStudent;
 	public static Family selectedFamily;
@@ -67,12 +66,9 @@ public class MainActivity extends AppCompatActivity {
 		// menu should be considered as top level destinations.
 
 		DBHelper dbHelper = new DBHelper(MainActivity.this);
+
 		List<Family> l = dbHelper.getFamilies();
-		for (Family f: l) {
-			System.out.println(f);
-		}
 		selectedFamily = l.get(0);
-		System.out.println(selectedFamily);
 		children = dbHelper.getChildren(selectedFamily);
 
 		mAppBarConfiguration = new AppBarConfiguration.Builder(

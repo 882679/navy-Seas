@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,27 +29,21 @@ public class ProfileFragment extends Fragment {
 	private final Student selectedStudent = MainActivity.selectedStudent;
 	private FragmentProfileBinding binding;
 	private ProfileAdapter adapter;
-	private LinearLayoutManager linearLayoutManager;
 	private View root;
 	private RecyclerView recyclerView;
 	private ViewGroup container;
 	private TextView amountTextView;
-	private double amount;
 	private DBHelper db;
-	private ArrayList<Reservation> studentReservations;
 	private ArrayList<Activity> studentActivities;
 
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		ProfileViewModel profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-
 		binding = FragmentProfileBinding.inflate(inflater, container, false);
 		root = binding.getRoot();
 		this.container = container;
 
 		db = new DBHelper(container.getContext());
 
-		studentReservations = db.getStudentReservations(selectedStudent);
-		studentActivities = db.getStudentActivities(selectedStudent);
+		studentActivities = db.getActivities(selectedStudent);
 
 		final TextView textView = binding.textProfile;
 		textView.setText(String.format("Attività di %s:", selectedStudent.getName()));
@@ -62,7 +55,7 @@ public class ProfileFragment extends Fragment {
 		recyclerView.setAdapter(adapter);
 		recyclerView.setHasFixedSize(true);
 
-		linearLayoutManager = new LinearLayoutManager(getActivity());
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
 		linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
 		recyclerView.setLayoutManager(linearLayoutManager);
@@ -77,7 +70,7 @@ public class ProfileFragment extends Fragment {
 		});
 
 		amountTextView = root.findViewById(R.id.amount);
-		amountTextView.setText(String.format("Totale: %s €", db.getStudentAmount(selectedStudent)));
+		amountTextView.setText(String.format("Totale: %s €", db.getAmount(selectedStudent)));
 
 		return root;
 	}
@@ -95,22 +88,27 @@ public class ProfileFragment extends Fragment {
 				final int position = viewHolder.getAdapterPosition();
 				final Activity activityToRemove = adapter.getData().get(position);
 
-				db.unsubscribe(selectedStudent.getId(), activityToRemove.getId());
-				studentActivities = db.getStudentActivities(selectedStudent);
+				db.unsubscribe(new Reservation(
+						selectedStudent.getId(),
+						activityToRemove.getId())
+				);
+				studentActivities = db.getActivities(selectedStudent);
 
 				resizeRecyclerView();
-				amountTextView.setText(String.format("Totale: %s €", db.getStudentAmount(selectedStudent)));
+				amountTextView.setText(String.format("Totale: %s €", db.getAmount(selectedStudent)));
 				adapter.removeItem(position);
 
 				Snackbar snackbar = Snackbar.make(root, "La prenotazione è stata eliminata.", Snackbar.LENGTH_LONG);
 				snackbar.setAction("ANNULLA", view -> {
-					db.subscribe(selectedStudent.getId(), activityToRemove.getId());
-					studentReservations = db.getStudentReservations(selectedStudent);
-					studentActivities = db.getStudentActivities(selectedStudent);
+					db.subscribe(new Reservation(
+							selectedStudent.getId(),
+							activityToRemove.getId()
+					));
+					studentActivities = db.getActivities(selectedStudent);
 
 					adapter.restoreItem(activityToRemove, position);
 
-					amountTextView.setText(String.format("Totale: %s €", db.getStudentAmount(selectedStudent)));
+					amountTextView.setText(String.format("Totale: %s €", db.getAmount(selectedStudent)));
 					resizeRecyclerView();
 				});
 

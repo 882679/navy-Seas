@@ -19,19 +19,18 @@ import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
 import com.example.navyseas.database.DBHelper;
 import com.example.navyseas.database.Model.Activity;
+import com.example.navyseas.database.Model.Reservation;
 import com.example.navyseas.database.Model.Student;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.MyViewHolder> {
-
 	private final LayoutInflater inflater;
-	private final List<Activity> activityList;
+	private final ArrayList<Activity> activityList;
 	private final Context context;
 	private final Student selectedStudent;
 	private final DBHelper db;
-	private ArrayList<Activity> studentActivities;
+	private final ArrayList<Activity> studentActivities;
 
 	public ReservationAdapter(Context context, ArrayList<Activity> activityList, Student selectedStudent, ArrayList<Activity> studentActivities, DBHelper db) {
 		inflater = LayoutInflater.from(context);
@@ -46,7 +45,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 	@Override
 	public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View view = inflater.inflate(R.layout.card_view_reservation, parent, false);
-		return new MyViewHolder(view, selectedStudent, studentActivities);
+		return new MyViewHolder(view, studentActivities);
 	}
 
 	@Override
@@ -70,7 +69,10 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 						// The dialog is automatically dismissed
 						// when a dialog button is clicked.
 						.setPositiveButton(android.R.string.yes, (dialog, which) -> {
-							db.subscribe(selectedStudent.getId(), selectedActivity.getId());
+							db.subscribe(new Reservation(
+									selectedStudent.getId(),
+									selectedActivity.getId()
+							));
 							navController.navigate(R.id.nav_profile);
 						})
 
@@ -97,28 +99,19 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 		super.onAttachedToRecyclerView(recyclerView);
 	}
 
-	// aggiunge la lista dei paesi nel recyclerview
-	public void addAll(ArrayList<Activity> list) {
-		activityList.addAll(list);
-		notifyDataSetChanged();
-	}
-
 	static class MyViewHolder extends RecyclerView.ViewHolder {
-
 		private final TextView activityName;
 		private final TextView price;
 		private final TextView day;
 		private final ImageView imgActivity;
-		private final Student selectedStudent;
-		private ArrayList<Activity> studentActivities;
+		private final ArrayList<Activity> studentActivities;
 
-		public MyViewHolder(View itemView, Student selectedStudent, ArrayList<Activity> studentActivities) {
+		public MyViewHolder(View itemView, ArrayList<Activity> studentActivities) {
 			super(itemView);
 			activityName = itemView.findViewById(R.id.activityName);
 			price = itemView.findViewById(R.id.expenses);
 			day = itemView.findViewById(R.id.weekDay);
 			imgActivity = itemView.findViewById(R.id.imageView);
-			this.selectedStudent = selectedStudent;
 			this.studentActivities = studentActivities;
 		}
 
@@ -129,22 +122,17 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 			this.price.setText(String.format("%s €", currentCard.getPrice()));
 
 			boolean redColor = false;
-            for (Activity a : studentActivities) {
-                System.out.println("a.getDay(): " + a.getDay() +
-		                ", currentCard.getName(): " + currentCard.getDay());
+			for (Activity a : studentActivities) {
+				if (a.getDay().equals(currentCard.getDay())) {
+					redColor = true;
+					break;
+				}
 
-                if (a.getDay().equals(currentCard.getDay())) {
-                    redColor = true;
-                    break;
-                }
+			}
 
-            }
-
-            System.out.println("||| " + redColor);
 			this.day.setText(currentCard.getDay());
 			if (redColor) this.day.setTextColor(Color.RED);
 		}
 
 	}
-
 }

@@ -1,15 +1,13 @@
 package com.example.navyseas.database.Model;
 
-import org.bson.types.ObjectId;
-
-import java.util.Objects;
+import androidx.annotation.NonNull;
 
 public class Activity {
-	private int id;
-	private String name;
-	private String day;
-	private double price;
-	private int capacity;
+	private final int id; // PRIMARY KEY
+	private final String name;
+	private final String day;
+	private final double price;
+	private final int capacity;
 
 	public Activity(int id, String name, String day, double price, int capacity) {
 		this.id = id;
@@ -23,42 +21,23 @@ public class Activity {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public String getName() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getDay() {
 		return day;
 	}
 
-	public void setDay(String day) {
-		this.day = day;
-	}
-
 	public double getPrice() {
 		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
 	}
 
 	public int getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(int capacity) {
-		this.capacity = capacity;
-	}
-
+	@NonNull
 	@Override
 	public String toString() {
 		return "Activity{" +
@@ -69,13 +48,4 @@ public class Activity {
 				", capacity=" + capacity +
 				'}';
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		Activity activity = (Activity) o;
-		return Objects.equals(name, activity.name);
-	}
-
 }

@@ -21,25 +21,24 @@ import com.example.navyseas.database.Model.Student;
 import java.util.ArrayList;
 
 public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyViewHolder> {
-
 	private final LayoutInflater inflater;
 	private final ArrayList<Reservation> reservations;
 	private final ArrayList<Activity> activities;
-	private final ArrayList<Student> students;
+	private final ArrayList<Student> children;
 
 	public HomePageAdapter(Context context, Family selectedFamily) {
 		inflater = LayoutInflater.from(context);
 		DBHelper db = new DBHelper(context);
-		reservations = db.getChildrenReservations(selectedFamily);
+		reservations = db.getReservations(selectedFamily);
 		activities = db.getActivities();
-		students = db.getStudents();
+		children = db.getChildren(selectedFamily);
 	}
 
 	@NonNull
 	@Override
 	public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 		View view = inflater.inflate(R.layout.card_view_home, parent, false);
-		return new MyViewHolder(view, students, reservations, activities);
+		return new MyViewHolder(view, children, activities);
 	}
 
 	@Override
@@ -58,28 +57,16 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
 		super.onAttachedToRecyclerView(recyclerView);
 	}
 
-	public void addAll(ArrayList<Reservation> list) {
-		reservations.addAll(list);
-		notifyDataSetChanged();
-	}
-
-	public void clear() {
-		reservations.clear();
-		notifyDataSetChanged();
-	}
-
 	static class MyViewHolder extends RecyclerView.ViewHolder {
-
 		private final TextView activityName;
 		private final TextView studentName;
 		private final TextView price;
 		private final TextView day;
 		private final ImageView imgActivity;
-		private final ArrayList<Reservation> reservations;
 		private final ArrayList<Activity> activities;
 		private final ArrayList<Student> students;
 
-		public MyViewHolder(View itemView, ArrayList<Student> students, ArrayList<Reservation> reservations, ArrayList<Activity> activities) {
+		public MyViewHolder(View itemView, ArrayList<Student> students, ArrayList<Activity> activities) {
 			super(itemView);
 			activityName = itemView.findViewById(R.id.activityName);
 			studentName = itemView.findViewById(R.id.studentName);
@@ -87,7 +74,6 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
 			day = itemView.findViewById(R.id.weekDay);
 			imgActivity = itemView.findViewById(R.id.imageView);
 			this.activities = activities;
-			this.reservations = reservations;
 			this.students = students;
 		}
 
@@ -112,13 +98,11 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
 			}
 
 			this.activityName.setText(name);
+			assert a != null;
 			this.imgActivity.setImageResource(MainActivity.getActivityIcon(a));
-
 			this.studentName.setText(sName);
 			this.price.setText(String.format("%s €", price));
 			this.day.setText(day);
 		}
-
 	}
-
 }

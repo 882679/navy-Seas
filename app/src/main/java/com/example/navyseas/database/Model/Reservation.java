@@ -1,29 +1,30 @@
 package com.example.navyseas.database.Model;
 
+import androidx.annotation.NonNull;
+
 public class Reservation {
+	private final int studentID;  // FOREIGN KEY
+	private final int activityID; // FOREIGN KEY
 
-    private int studentID;
-    private int activityID;
+	public Reservation(int studentID, int activityID) {
+		this.studentID = studentID;
+		this.activityID = activityID;
+	}
 
-    public Reservation(int studentID, int activityID) {
-        this.studentID = studentID;
-        this.activityID = activityID;
-    }
+	public int getStudentID() {
+		return studentID;
+	}
 
-    public int getStudentID() {
-        return studentID;
-    }
+	public int getActivityID() {
+		return activityID;
+	}
 
-    public void setStudentID(int studentID) {
-        this.studentID = studentID;
-    }
-
-    public int getActivityID() {
-        return activityID;
-    }
-
-    public void setActivityID(int activityID) {
-        this.activityID = activityID;
-    }
-
+	@NonNull
+	@Override
+	public String toString() {
+		return "Reservation{" +
+				"studentID=" + studentID +
+				", activityID=" + activityID +
+				'}';
+	}
 }
