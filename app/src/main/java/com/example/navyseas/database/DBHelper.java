@@ -411,7 +411,8 @@ public class DBHelper extends SQLiteOpenHelper {
 	public boolean checkActivity(Student student, Activity activity) {
 		return !isStudentAlreadySubscribed(student, activity) &&
 				!isStudentBusy(student, activity) &&
-				checkIfActivityIsAvailable(activity);
+				checkIfActivityIsAvailable(activity) &&
+				checkWeeklyActivitiesCap(student);
 	}
 
 	/**
@@ -433,8 +434,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * Checks if a specific {@link com.example.navyseas.database.Model.Student} is already
-	 * subscribed to a specific {@link com.example.navyseas.database.Model.Activity}.
+	 * Checks if a specific {@link Student} is already subscribed to a specific {@link Activity}.
 	 *
 	 * @param student  the student to check
 	 * @param activity the activity to check
@@ -449,13 +449,22 @@ public class DBHelper extends SQLiteOpenHelper {
 	}
 
 	/**
-	 * Checks if given {@link com.example.navyseas.database.Model.Activity}
-	 * has at least 1 "place" left.
+	 * Checks if given {@link Activity} has at least 1 "place" left.
 	 *
 	 * @param activity the activity to check
 	 * @return true if "activity" can be booked, false if there are no places left.
 	 */
 	private boolean checkIfActivityIsAvailable(Activity activity) {
 		return this.getReservations(activity).size() < activity.getCapacity();
+	}
+
+	/**
+	 * Checks if given {@link Student}'s booked for 4 activities at most.
+	 *
+	 * @param student the student to check
+	 * @return true if "activity" can be booked, false if there are no places left.
+	 */
+	private boolean checkWeeklyActivitiesCap(Student student) {
+		return this.getReservations(student).size() < 5;
 	}
 }
