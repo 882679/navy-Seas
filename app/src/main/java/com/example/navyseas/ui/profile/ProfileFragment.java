@@ -28,12 +28,12 @@ import java.util.ArrayList;
 public class ProfileFragment extends Fragment {
 	private final Student selectedStudent = MainActivity.selectedStudent;
 	private FragmentProfileBinding binding;
-	private ProfileAdapter adapter;
+	public static ProfileAdapter profileAdapter;
 	private View root;
 	private RecyclerView recyclerView;
 	private ViewGroup container;
 	private TextView amountTextView;
-	private DBHelper db;
+	public static DBHelper db;
 	private ArrayList<Activity> studentActivities;
 
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -50,9 +50,9 @@ public class ProfileFragment extends Fragment {
 
 		recyclerView = root.findViewById(R.id.recyclerViewProfile);
 
-		adapter = new ProfileAdapter(container.getContext(), studentActivities);
+		profileAdapter = new ProfileAdapter(container.getContext(), getParentFragmentManager(), studentActivities);
 
-		recyclerView.setAdapter(adapter);
+		recyclerView.setAdapter(profileAdapter);
 		recyclerView.setHasFixedSize(true);
 
 		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -86,7 +86,7 @@ public class ProfileFragment extends Fragment {
 			@Override
 			public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
 				final int position = viewHolder.getAdapterPosition();
-				final Activity activityToRemove = adapter.getData().get(position);
+				final Activity activityToRemove = profileAdapter.getData().get(position);
 
 				db.unsubscribe(new Reservation(
 						selectedStudent.getId(),
@@ -96,7 +96,7 @@ public class ProfileFragment extends Fragment {
 
 				resizeRecyclerView();
 				amountTextView.setText(String.format("Totale: %s €", db.getAmount(selectedStudent)));
-				adapter.removeItem(position);
+				profileAdapter.removeItem(position);
 
 				Snackbar snackbar = Snackbar.make(root, "La prenotazione è stata eliminata.", Snackbar.LENGTH_LONG);
 				snackbar.setAction("ANNULLA", view -> {
@@ -106,7 +106,7 @@ public class ProfileFragment extends Fragment {
 					));
 					studentActivities = db.getActivities(selectedStudent);
 
-					adapter.restoreItem(activityToRemove, position);
+					profileAdapter.restoreItem(activityToRemove, position);
 
 					amountTextView.setText(String.format("Totale: %s €", db.getAmount(selectedStudent)));
 					resizeRecyclerView();

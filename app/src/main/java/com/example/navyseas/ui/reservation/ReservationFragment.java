@@ -22,55 +22,55 @@ import com.example.navyseas.databinding.FragmentReservationBinding;
 import java.util.ArrayList;
 
 public class ReservationFragment extends Fragment {
-	private final Student selectedStudent = MainActivity.selectedStudent;
-	private FragmentReservationBinding binding;
+    private final Student selectedStudent = MainActivity.selectedStudent;
+    private FragmentReservationBinding binding;
 
-	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		binding = FragmentReservationBinding.inflate(inflater, container, false);
-		View root = binding.getRoot();
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        binding = FragmentReservationBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
 
-		DBHelper database = new DBHelper(container.getContext());
-		ArrayList<Activity> studentActivities = database.getActivities(selectedStudent);
-		ArrayList<Activity> activities = database.getActivities();
-		ArrayList<Activity> activitiesNotBooked = new ArrayList<>();
+        DBHelper database = new DBHelper(container.getContext());
+        ArrayList<Activity> studentActivities = database.getActivities(selectedStudent);
+        ArrayList<Activity> activities = database.getActivities();
+        ArrayList<Activity> activitiesNotBooked = new ArrayList<>();
 
-		for (int i = 0; i < activities.size(); i++) {
-			boolean flag = true;
-			for (int j = 0; j < studentActivities.size(); j++) {
-				if (studentActivities.get(j).getId() == activities.get(i).getId()) flag = false;
-			}
+        for (int i = 0; i < activities.size(); i++) {
+            boolean flag = true;
+            for (int j = 0; j < studentActivities.size(); j++) {
+                if (studentActivities.get(j).getId() == activities.get(i).getId()) flag = false;
+            }
 
-			if (flag) activitiesNotBooked.add(activities.get(i));
-		}
+            if (flag) activitiesNotBooked.add(activities.get(i));
+        }
 
-		final TextView textView = binding.textProfile;
-		textView.setText(String.format("Nuova prenotazione per %s:", selectedStudent.getName()));
+        final TextView textView = binding.textProfile;
+        textView.setText(String.format("Nuova prenotazione per %s:", selectedStudent.getName()));
 
-		RecyclerView recyclerView = root.findViewById(R.id.recyclerViewReservation);
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerViewReservation);
 
-		ReservationAdapter adapter = new ReservationAdapter(
-				container.getContext(),
-				activitiesNotBooked,
-				selectedStudent,
-				studentActivities,
-				database
-		);
+        ReservationAdapter adapter = new ReservationAdapter(
+                container.getContext(),
+                activitiesNotBooked,
+                selectedStudent,
+                studentActivities,
+                database
+        );
 
-		recyclerView.setAdapter(adapter);
-		recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
 
-		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-		linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-		recyclerView.setLayoutManager(linearLayoutManager);
-		recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-		return root;
-	}
+        return root;
+    }
 
-	@Override
-	public void onDestroyView() {
-		super.onDestroyView();
-		binding = null;
-	}
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 }

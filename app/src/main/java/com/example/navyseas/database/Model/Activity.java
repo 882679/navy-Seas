@@ -3,11 +3,11 @@ package com.example.navyseas.database.Model;
 import androidx.annotation.NonNull;
 
 public class Activity {
-	private final int id; // PRIMARY KEY
-	private final String name;
-	private final String day;
-	private final double price;
-	private final int capacity;
+	private int id; // PRIMARY KEY
+	private String name;
+	private String day;
+	private double price;
+	private int capacity;
 
 	public Activity(int id, String name, String day, double price, int capacity) {
 		this.id = id;
@@ -15,6 +15,9 @@ public class Activity {
 		this.day = day;
 		this.price = price;
 		this.capacity = capacity;
+	}
+
+	public Activity() {
 	}
 
 	public int getId() {

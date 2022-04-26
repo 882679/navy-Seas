@@ -26,19 +26,20 @@ public class HomeFragment extends Fragment {
 	private FragmentHomeBinding binding;
 	private SwipeRefreshLayout swipeContainer;
 	private ViewGroup container;
+	public static DBHelper db;
 
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		binding = FragmentHomeBinding.inflate(inflater, container, false);
 		View root = binding.getRoot();
 		this.container = container;
 
-		DBHelper db = new DBHelper(container.getContext());
+		db = new DBHelper(container.getContext());
 		ArrayList<Family> f = db.getFamilies();
 		Family selectedFamily = f.get(0);
 
 		RecyclerView recyclerView = root.findViewById(R.id.recyclerViewHome);
 
-		HomePageAdapter adapter = new HomePageAdapter(container.getContext(), selectedFamily);
+		HomePageAdapter adapter = new HomePageAdapter(container.getContext(), selectedFamily, getParentFragmentManager());
 
 		recyclerView.setAdapter(adapter);
 		recyclerView.setHasFixedSize(true);

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navyseas.MainActivity;
@@ -17,6 +18,7 @@ import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Family;
 import com.example.navyseas.database.Model.Reservation;
 import com.example.navyseas.database.Model.Student;
+import com.example.navyseas.ui.ActivityDetailsFragment;
 
 import java.util.ArrayList;
 
@@ -25,13 +27,15 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
 	private final ArrayList<Reservation> reservations;
 	private final ArrayList<Activity> activities;
 	private final ArrayList<Student> children;
+	private final FragmentManager fragManager;
 
-	public HomePageAdapter(Context context, Family selectedFamily) {
+	public HomePageAdapter(Context context, Family selectedFamily, FragmentManager getSupportFragmentManager) {
 		inflater = LayoutInflater.from(context);
 		DBHelper db = new DBHelper(context);
 		reservations = db.getReservations(selectedFamily);
 		activities = db.getActivities();
 		children = db.getChildren(selectedFamily);
+		fragManager = getSupportFragmentManager;
 	}
 
 	@NonNull
@@ -45,6 +49,13 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
 	public void onBindViewHolder(@NonNull HomePageAdapter.MyViewHolder holder, int position) {
 		Reservation current = reservations.get(position);
 		holder.setData(current);
+
+		holder.itemView.setOnClickListener(v -> {
+			FragmentManager fm = fragManager;
+			ActivityDetailsFragment dFragment = new ActivityDetailsFragment(current.getActivityID(), current.getStudentID(), true);
+			// Show DialogFragment
+			dFragment.show(fm, "Activity Details Fragment");
+		});
 	}
 
 	@Override

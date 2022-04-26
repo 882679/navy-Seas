@@ -8,21 +8,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
 import com.example.navyseas.database.Model.Activity;
+import com.example.navyseas.ui.ActivityDetailsFragment;
 
 import java.util.ArrayList;
 
 public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHolder> {
 	private final LayoutInflater inflater;
 	private final ArrayList<Activity> activities;
+	private final FragmentManager fragManager;
 
-	public ProfileAdapter(Context context, ArrayList<Activity> activities) {
+	public ProfileAdapter(Context context, FragmentManager getSupportFragmentManager, ArrayList<Activity> activities) {
 		inflater = LayoutInflater.from(context);
 		this.activities = activities;
+		fragManager = getSupportFragmentManager;
 	}
 
 	@NonNull
@@ -34,8 +38,15 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
 
 	@Override
 	public void onBindViewHolder(@NonNull ProfileAdapter.MyViewHolder holder, int position) {
-		Activity current = activities.get(position);
-		holder.setData(current);
+		Activity currentActivity = activities.get(position);
+		holder.setData(currentActivity);
+
+		holder.itemView.setOnClickListener(v -> {
+			FragmentManager fm = fragManager;
+			ActivityDetailsFragment dFragment = new ActivityDetailsFragment(currentActivity, false);
+			// Show DialogFragment
+			dFragment.show(fm, "Activity Details Fragment");
+		});
 	}
 
 	@Override

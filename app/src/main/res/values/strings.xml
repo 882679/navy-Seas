@@ -16,4 +16,7 @@
     <string name="student_name">Student name</string>
     <string name="totale_10_00">Totale: 10.00 €</string>
     <string name="welcome">Bentornato, ecco la lista delle tue\n ultime prenotazioni:</string>
+    <string name="activityname">activityName</string>
+    <string name="description">description</string>
+    <string name="cancella_prenotazione">Elimina</string>
 </resources>
