@@ -20,7 +20,6 @@ import com.example.navyseas.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -62,17 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
 		drawer = binding.drawerLayout;
 		navigationView = binding.navView;
-		// Passing each menu ID as a set of Ids because each
-		// menu should be considered as top level destinations.
 
 		DBHelper dbHelper = new DBHelper(MainActivity.this);
 
-		List<Family> l = dbHelper.getFamilies();
-		selectedFamily = l.get(0);
+		selectedFamily = dbHelper.login("test", "test");
 		children = dbHelper.getChildren(selectedFamily);
 
-		mAppBarConfiguration = new AppBarConfiguration.Builder(
-				R.id.nav_home, R.id.nav_profile)
+		mAppBarConfiguration = new AppBarConfiguration
+				.Builder(R.id.nav_home, R.id.nav_profile)
 				.setOpenableLayout(drawer)
 				.build();
 		navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

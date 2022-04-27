@@ -22,18 +22,18 @@ import com.example.navyseas.ui.ActivityDetailsFragment;
 
 import java.util.ArrayList;
 
-public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyViewHolder> {
+public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
 	private final LayoutInflater inflater;
 	private final ArrayList<Reservation> reservations;
 	private final ArrayList<Activity> activities;
 	private final ArrayList<Student> children;
 	private final FragmentManager fragManager;
 
-	public HomePageAdapter(Context context, Family selectedFamily, FragmentManager getSupportFragmentManager) {
+	public HomeAdapter(Context context, Family selectedFamily, FragmentManager getSupportFragmentManager) {
 		inflater = LayoutInflater.from(context);
 		DBHelper db = new DBHelper(context);
 		reservations = db.getReservations(selectedFamily);
-		activities = db.getActivities();
+		activities = db.getActivities(reservations);
 		children = db.getChildren(selectedFamily);
 		fragManager = getSupportFragmentManager;
 	}
@@ -46,7 +46,7 @@ public class HomePageAdapter extends RecyclerView.Adapter<HomePageAdapter.MyView
 	}
 
 	@Override
-	public void onBindViewHolder(@NonNull HomePageAdapter.MyViewHolder holder, int position) {
+	public void onBindViewHolder(@NonNull HomeAdapter.MyViewHolder holder, int position) {
 		Reservation current = reservations.get(position);
 		holder.setData(current);
 

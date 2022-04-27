@@ -20,13 +20,12 @@ import com.example.navyseas.database.DBHelper;
 import com.example.navyseas.database.Model.Family;
 import com.example.navyseas.databinding.FragmentHomeBinding;
 
-import java.util.ArrayList;
-
 public class HomeFragment extends Fragment {
+	public static DBHelper db;
+	public Family selectedFamily;
 	private FragmentHomeBinding binding;
 	private SwipeRefreshLayout swipeContainer;
 	private ViewGroup container;
-	public static DBHelper db;
 
 	public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -34,12 +33,16 @@ public class HomeFragment extends Fragment {
 		this.container = container;
 
 		db = new DBHelper(container.getContext());
-		ArrayList<Family> f = db.getFamilies();
-		Family selectedFamily = f.get(0);
+
+		// TODO: Il login va fatto una volta sola e da quel punto in poi l'oggetto Family deve
+		//  rimanere lo stesso per ogni schermata senza dover ri-effetture il login
+		/*Family selectedFamily = MainActivity.selectedFamily;*/
+
+		selectedFamily = db.login("test", "test2");
 
 		RecyclerView recyclerView = root.findViewById(R.id.recyclerViewHome);
 
-		HomePageAdapter adapter = new HomePageAdapter(container.getContext(), selectedFamily, getParentFragmentManager());
+		HomeAdapter adapter = new HomeAdapter(container.getContext(), selectedFamily, getParentFragmentManager());
 
 		recyclerView.setAdapter(adapter);
 		recyclerView.setHasFixedSize(true);
@@ -59,7 +62,7 @@ public class HomeFragment extends Fragment {
 
 		TextView amountTextView = root.findViewById(R.id.amount);
 
-		amountTextView.setText(String.format("Totale: %s €", db.getAmount(selectedFamily)));
+		amountTextView.setText(String.format("Totale: %s €", HomeFragment.db.getAmount(selectedFamily)));
 
 		return root;
 	}
