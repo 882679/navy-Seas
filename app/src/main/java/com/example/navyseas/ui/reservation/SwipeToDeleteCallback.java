@@ -15,8 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.navyseas.R;
-
 abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
 	private final Paint mClearPaint;
 	private final ColorDrawable mBackground;
