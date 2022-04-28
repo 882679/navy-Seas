@@ -19,4 +19,5 @@
     <string name="activityname">activityName</string>
     <string name="description">description</string>
     <string name="cancella_prenotazione">Elimina</string>
+    <string name="prenota">Prenota</string>
 </resources>

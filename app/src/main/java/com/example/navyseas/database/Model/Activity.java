@@ -7,6 +7,7 @@ public class Activity {
 	private String day;
 	private double price;
 	private int capacity;
+	private String description;
 
 	public Activity(int id, String name, String description, String day, double price, int capacity) {
 		this.id = id;
