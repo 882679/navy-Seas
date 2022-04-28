@@ -21,12 +21,12 @@ import com.example.navyseas.database.Model.Student;
 import com.example.navyseas.ui.home.HomeFragment;
 
 
-public class DetailsFragment extends DialogFragment {
+public class DetailsDialog extends DialogFragment {
 
 	private final Activity activity;
 	private final Student student;
 
-	public DetailsFragment(Activity activity, Student student) {
+	public DetailsDialog(Activity activity, Student student) {
 		this.activity = activity;
 		this.student = student;
 	}
@@ -42,7 +42,7 @@ public class DetailsFragment extends DialogFragment {
 		ImageView iconActivity = rootView.findViewById(R.id.iconActivity);
 
 		activityName.setText(activity.getName());
-		description.setText(String.format("Descrizione: %s", "\n\ndescrizione..........\n\ndescrizione..........\n\ndescrizione..........\n\ndescrizione.........."));
+		description.setText(activity.getDescription());
 		iconActivity.setImageResource(MainActivity.getActivityIcon(activity));
 
 		Button button = rootView.findViewById(R.id.btnAddReservation);

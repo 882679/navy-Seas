@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
 		//  rimanere lo stesso per ogni schermata senza dover ri-effetture il login
 		/*Family selectedFamily = MainActivity.selectedFamily;*/
 
-		selectedFamily = db.login("test", "test");
+		selectedFamily = db.login("Navy@stud.unive.it", "Navy");
 
 		RecyclerView recyclerView = root.findViewById(R.id.recyclerViewHome);
 

@@ -18,18 +18,18 @@ import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Reservation;
 import com.example.navyseas.ui.home.HomeFragment;
 
-public class ActivityDetailsFragment extends DialogFragment {
+public class ActivityDetailsDialog extends DialogFragment {
 	private final boolean isHome;
 	private Activity activity;
 	private int activityID;
 	private int studentID;
 
-	public ActivityDetailsFragment(Activity activity, boolean isHome) {
+	public ActivityDetailsDialog(Activity activity, boolean isHome) {
 		this.activity = activity;
 		this.isHome = isHome;
 	}
 
-	public ActivityDetailsFragment(int activityID, int studentID, boolean isHome) {
+	public ActivityDetailsDialog(int activityID, int studentID, boolean isHome) {
 		this.activityID = activityID;
 		this.studentID = studentID;
 		this.isHome = isHome;
@@ -48,7 +48,7 @@ public class ActivityDetailsFragment extends DialogFragment {
 		else currentActivity = new Activity();
 
 		activityName.setText(isHome ? currentActivity.getName() : activity.getName());
-		description.setText(String.format("Descrizione: %s", "\n\ndescrizione..........\n\ndescrizione..........\n\ndescrizione..........\n\ndescrizione.........."));
+		description.setText(isHome ? currentActivity.getDescription() : activity.getDescription());
 		iconActivity.setImageResource(MainActivity.getActivityIcon(isHome ? currentActivity : activity));
 
 		Button button = rootView.findViewById(R.id.btnDeleteReservation);

@@ -15,7 +15,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
-abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
+import com.example.navyseas.R;
+
+abstract public class SwipeToAddCallback extends ItemTouchHelper.Callback {
 	private final Paint mClearPaint;
 	private final ColorDrawable mBackground;
 	private final int backgroundColor;
@@ -24,13 +26,13 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
 	private final int intrinsicHeight;
 	Context mContext;
 
-	SwipeToDeleteCallback(Context context) {
+	SwipeToAddCallback(Context context) {
 		mContext = context;
 		mBackground = new ColorDrawable();
 		backgroundColor = Color.parseColor("#00c853");
 		mClearPaint = new Paint();
 		mClearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-		deleteDrawable = ContextCompat.getDrawable(mContext, android.R.drawable.ic_input_add);
+		deleteDrawable = ContextCompat.getDrawable(mContext, R.drawable.add_icon);
 		assert deleteDrawable != null;
 		intrinsicWidth = deleteDrawable.getIntrinsicWidth();
 		intrinsicHeight = deleteDrawable.getIntrinsicHeight();
@@ -72,12 +74,12 @@ abstract public class SwipeToDeleteCallback extends ItemTouchHelper.Callback {
 
 		mBackground.setColor(backgroundColor);
 		mBackground.setBounds(
-				itemView.getRight() + (int) dX, itemView.getTop(),
+				itemView.getRight() + (int) dX, itemView.getTop()+20,
 				itemView.getRight(),
 				itemView.getBottom());
 		mBackground.draw(c);
 
-		int deleteIconTop = itemView.getTop() + (itemHeight - intrinsicHeight) / 2;
+		int deleteIconTop = (itemView.getTop() + (itemHeight - intrinsicHeight) / 2) + 10;
 		int deleteIconMargin = (itemHeight - intrinsicHeight) / 2;
 		int deleteIconLeft = itemView.getRight() - deleteIconMargin - intrinsicWidth;
 		int deleteIconRight = itemView.getRight() - deleteIconMargin;

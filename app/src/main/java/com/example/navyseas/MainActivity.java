@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.SubMenu;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -64,13 +66,23 @@ public class MainActivity extends AppCompatActivity {
 
 		DBHelper dbHelper = new DBHelper(MainActivity.this);
 
-		selectedFamily = dbHelper.login("test", "test");
+		selectedFamily = dbHelper.login("Navy@stud.unive.it", "Navy");
 		children = dbHelper.getChildren(selectedFamily);
 
 		mAppBarConfiguration = new AppBarConfiguration
 				.Builder(R.id.nav_home, R.id.nav_profile)
 				.setOpenableLayout(drawer)
 				.build();
+
+
+		View headerView = navigationView.getHeaderView(0);
+		TextView familyName = headerView.findViewById(R.id.familyName);
+		TextView familyEmail = headerView.findViewById(R.id.familyEmail);
+		familyName.setText(selectedFamily.getName());
+		familyEmail.setText(selectedFamily.getEmail());
+
+
+
 		navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 		NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 		NavigationUI.setupWithNavController(navigationView, navController);

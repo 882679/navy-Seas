@@ -16,6 +16,7 @@ import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
 import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Student;
+import com.example.navyseas.ui.home.HomeFragment;
 
 import java.util.ArrayList;
 
@@ -47,7 +48,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 		holder.setData(currentActivity);
 
 		holder.itemView.setOnClickListener(v -> {
-			DetailsFragment dFragment = new DetailsFragment(currentActivity, selectedStudent);
+			DetailsDialog dFragment = new DetailsDialog(currentActivity, selectedStudent);
 			// Show DialogFragment
 			dFragment.show(fragManager, "Activity Details Fragment");
 		});
@@ -79,6 +80,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 
 	static class MyViewHolder extends RecyclerView.ViewHolder {
 		private final TextView activityName;
+		private final TextView capacity;
 		private final TextView price;
 		private final TextView day;
 		private final ImageView imgActivity;
@@ -87,6 +89,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 		public MyViewHolder(View itemView, ArrayList<Activity> studentActivities) {
 			super(itemView);
 			activityName = itemView.findViewById(R.id.activityName);
+			capacity = itemView.findViewById(R.id.capacity);
 			price = itemView.findViewById(R.id.expenses);
 			day = itemView.findViewById(R.id.weekDay);
 			imgActivity = itemView.findViewById(R.id.imageView);
@@ -94,21 +97,22 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 		}
 
 		// Imposto le informazioni delle cards nel recyclerview
-		public void setData(Activity currentCard) {
-			this.activityName.setText(currentCard.getName());
-			this.imgActivity.setImageResource(MainActivity.getActivityIcon(currentCard));
-			this.price.setText(String.format("%s €", currentCard.getPrice()));
+		public void setData(Activity currentActivity) {
+			this.activityName.setText(currentActivity.getName());
+			this.capacity.setText(HomeFragment.db.getNumberOfReservations(currentActivity)+"/"+currentActivity.getCapacity());
+			this.imgActivity.setImageResource(MainActivity.getActivityIcon(currentActivity));
+			this.price.setText(String.format("%s €", currentActivity.getPrice()));
 
 			boolean redColor = false;
 			for (Activity a : studentActivities) {
-				if (a.getDay().equals(currentCard.getDay())) {
+				if (a.getDay().equals(currentActivity.getDay())) {
 					redColor = true;
 					break;
 				}
 
 			}
 
-			this.day.setText(currentCard.getDay());
+			this.day.setText(currentActivity.getDay());
 			if (redColor) this.day.setTextColor(Color.RED);
 		}
 

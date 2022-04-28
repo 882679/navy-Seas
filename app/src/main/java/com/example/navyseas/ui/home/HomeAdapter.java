@@ -18,7 +18,7 @@ import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Family;
 import com.example.navyseas.database.Model.Reservation;
 import com.example.navyseas.database.Model.Student;
-import com.example.navyseas.ui.ActivityDetailsFragment;
+import com.example.navyseas.ui.ActivityDetailsDialog;
 
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
 		holder.itemView.setOnClickListener(v -> {
 			FragmentManager fm = fragManager;
-			ActivityDetailsFragment dFragment = new ActivityDetailsFragment(current.getActivityID(), current.getStudentID(), true);
+			ActivityDetailsDialog dFragment = new ActivityDetailsDialog(current.getActivityID(), current.getStudentID(), true);
 			// Show DialogFragment
 			dFragment.show(fm, "Activity Details Fragment");
 		});
