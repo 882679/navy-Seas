@@ -2,6 +2,8 @@
     <string name="app_name">navySEAS</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_family">Famiglia Falcarin</string>
+    <string name="nav_header_email">falcarin@stud.unive.it</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
@@ -17,5 +19,4 @@
     <string name="activityname">activityName</string>
     <string name="description">description</string>
     <string name="cancella_prenotazione">Elimina</string>
-    <string name="prenota">Prenota</string>
 </resources>

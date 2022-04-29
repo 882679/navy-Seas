@@ -36,19 +36,11 @@
                     android:id="@+id/activityName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/activity_name"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-                <TextView
-                    android:id="@+id/capacity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
-                    android:text="10/40"
-                    android:textColor="#828282"
-                    android:textSize="15sp" />
 
             </LinearLayout>
 

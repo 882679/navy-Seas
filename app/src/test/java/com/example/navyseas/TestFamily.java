@@ -25,7 +25,7 @@ public class TestFamily extends TestCase {
         ArrayList<Activity> activityListAlvise = new ArrayList<>();
         activityListAlvise.add(activityList.get(0));
 
-        /*f = new Family(0, "Carraro");*/
+        f = new Family(0, "Carraro");
 
         // Non va bene perchè l'ID assegnato durante la creazione dell'oggetto Family non
         // corrisponde necessariamente all'ID assegnato dal DB, poichè è un parametro
