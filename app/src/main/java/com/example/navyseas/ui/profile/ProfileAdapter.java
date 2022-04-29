@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.navyseas.MainActivity;
 import com.example.navyseas.R;
 import com.example.navyseas.database.Model.Activity;
-import com.example.navyseas.ui.ActivityDetailsFragment;
+import com.example.navyseas.ui.ActivityDetailsDialog;
 
 import java.util.ArrayList;
 
@@ -43,7 +43,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<ProfileAdapter.MyViewHo
 
 		holder.itemView.setOnClickListener(v -> {
 			FragmentManager fm = fragManager;
-			ActivityDetailsFragment dFragment = new ActivityDetailsFragment(currentActivity, false);
+			ActivityDetailsDialog dFragment = new ActivityDetailsDialog(currentActivity, false);
 			// Show DialogFragment
 			dFragment.show(fm, "Activity Details Fragment");
 		});

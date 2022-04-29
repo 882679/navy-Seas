@@ -61,11 +61,11 @@
 
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.Icon"
-            android:id="@+id/btnDeleteReservation"
-            app:icon="@drawable/baseline_delete_white_24dp"
+            android:id="@+id/btnAddReservation"
+            app:icon="@android:drawable/ic_input_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/cancella_prenotazione"
+            android:text="@string/prenota"
             />
     </LinearLayout>
 
