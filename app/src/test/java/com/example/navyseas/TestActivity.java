@@ -1,31 +1,39 @@
 package com.example.navyseas;
 
+import android.content.Context;
+
 import com.example.navyseas.database.Model.Activity;
 import com.example.navyseas.database.Model.Family;
 import com.example.navyseas.database.Model.Student;
-import static org.junit.Assert.*;
+import com.example.navyseas.database.Model.Reservation;
+import com.example.navyseas.database.DBHelper;
+
 
 import junit.framework.TestCase;
 
-import org.bson.types.ObjectId;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 import java.util.ArrayList;
-import java.util.List;
 
+
+@DisplayName("Activity list")
 public class TestActivity extends TestCase {
-    public ArrayList<Activity> activityList = new ArrayList<>();
+    public static DBHelper db = new DBHelper(container.getContext());
+    public ArrayList<Activity> activityListBefore = new ArrayList<>(getActivities);
+
+    public ArrayList<Activity> activityListNow = new ArrayList<>();
+
+    /*
+    *   update an activity
+    *   check the update
+    *   delete it
+    *   check delete
+    *   activity before == now
+    */
+    @DisplayName("Activity Update")
     @Test
-    public void setUp() {
-        activityList.add(new Activity(1, "Scacchi", "Lunedi", 8, 20));
-        activityList.add(new Activity(2, "Lettura", "Martedi", 5, 30));
-        activityList.add(new Activity(3, "Disegno", "Mercoledi", 7, 10));
-        activityList.add(new Activity(4, "Pallavolo", "Giovedi", 10, 50));
-        activityList.add(new Activity(5, "Calcio", "Venerdi", 15, 20));
-        activityList.add(new Activity(6, "Aiuto Compiti", "Lunedi", 10, 60));
-    }
-    @Test
-    public void testActivityList() {
+    public void ActivityUpdate() {
         Activity activity = new Activity(1, "Scacchi", "Lunedi", 8, 20);
         try {
             assertEquals(activity, activityList.get(0));

@@ -468,7 +468,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param activity the activity to check
      * @return true if "student" is already subscribed to another activity, false otherwise.
      */
-    private boolean isStudentAlreadySubscribed(Student student, Activity activity) {
+    public boolean isStudentAlreadySubscribed(Student student, Activity activity) {
         for (int i = 0; i < this.getActivities(student).size(); i++) {
             if (this.getActivities(student).get(i).getId() == activity.getId()) return true;
         }
