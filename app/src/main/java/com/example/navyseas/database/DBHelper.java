@@ -259,7 +259,6 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
-                System.out.println("/// NOME: "+id + name);
                 String description = cursor.getString(2);
                 String day = cursor.getString(3);
                 double price = cursor.getDouble(4);
@@ -495,25 +494,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return count;
     }
 
-    public void prova(Activity activity) {
-
-        String query = "SELECT * FROM " + RESERVATION_TABLE +" WHERE " + RESERVATION_COLUMN_STUDENT_ID + " = " + activity.getId();
-
-        System.out.println("MY ACTIVITY: "+activity.getId() + " name: "+ activity.getName());
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                System.out.println("activityid: " +cursor.getInt(0) +" student: "+cursor.getInt(1));
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-    }
-
     /**
      * Checks if a given {@link com.example.navyseas.database.Model.Student} can subscribe
      * to a specific {@link com.example.navyseas.database.Model.Activity}.
@@ -538,7 +518,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param activity the activity to check
      * @return true if "student" is already subscribed to another activity, false otherwise.
      */
-    private boolean isStudentBusy(Student student, Activity activity) {
+    public boolean isStudentBusy(Student student, Activity activity) {
         for (int i = 0; i < this.getActivities(student).size(); i++) {
             if (this.getActivities(student).get(i).getDay().equals(activity.getDay()))
                 return true;
@@ -554,7 +534,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param activity the activity to check
      * @return true if "student" is already subscribed to another activity, false otherwise.
      */
-    private boolean isStudentAlreadySubscribed(Student student, Activity activity) {
+    public boolean isStudentAlreadySubscribed(Student student, Activity activity) {
         for (int i = 0; i < this.getActivities(student).size(); i++) {
             if (this.getActivities(student).get(i).getId() == activity.getId()) return true;
         }
@@ -568,7 +548,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param activity the activity to check
      * @return true if "activity" can be booked, false if there are no places left.
      */
-    private boolean checkIfActivityIsAvailable(Activity activity) {
+    public boolean checkIfActivityIsAvailable(Activity activity) {
         return this.getReservations(activity).size() < activity.getCapacity();
     }
 
@@ -578,7 +558,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param student the student to check
      * @return true if "activity" can be booked, false if there are no places left.
      */
-    private boolean checkWeeklyActivitiesCap(Student student) {
+    public boolean checkWeeklyActivitiesCap(Student student) {
         return this.getReservations(student).size() < 5;
     }
 
@@ -593,5 +573,75 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         return familyActivities;
+    }
+
+    public void test_addFamily(Family f) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(FAMILY_COLUMN_ID, f.getId());
+        cv.put(FAMILY_COLUMN_EMAIL, f.getEmail());
+        cv.put(FAMILY_COLUMN_NAME, f.getName());
+        cv.put(FAMILY_COLUMN_PASSWORD, f.getPassword());
+        db.insert(FAMILY_TABLE, null, cv);
+        db.close();
+    }
+
+    public void test_deleteFamily(Family f) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "DELETE FROM " + FAMILY_TABLE +
+                " WHERE " + FAMILY_COLUMN_ID + " = " + f.getId();
+
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        cursor.close();
+        db.close();
+    }
+
+    public void test_addStudent(Student student) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(STUDENT_COLUMN_ID, student.getId());
+        cv.put(STUDENT_COLUMN_NAME, student.getName());
+        cv.put(STUDENT_COLUMN_FAMILY_ID, student.getFamilyID());
+        db.insert(STUDENT_TABLE, null, cv);
+        db.close();
+    }
+
+    public void test_deleteStudent(Student student) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "DELETE FROM " + STUDENT_TABLE +
+                " WHERE " + STUDENT_COLUMN_ID + " = " + student.getId();
+
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        cursor.close();
+        db.close();
+    }
+
+    public void test_addActivity(Activity activity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(ACTIVITY_COLUMN_ID, activity.getId());
+        cv.put(ACTIVITY_COLUMN_NAME, activity.getName());
+        cv.put(ACTIVITY_COLUMN_DESCRIPTION, activity.getDescription());
+        cv.put(ACTIVITY_COLUMN_CAPACITY, activity.getCapacity());
+        cv.put(ACTIVITY_COLUMN_PRICE, activity.getPrice());
+        cv.put(ACTIVITY_COLUMN_DAY, activity.getDay());
+        db.insert(ACTIVITY_TABLE, null, cv);
+        db.close();
+    }
+
+    public void test_deleteActivity(Activity activity) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String query = "DELETE FROM " + ACTIVITY_TABLE +
+                " WHERE " + ACTIVITY_COLUMN_ID + " = " + activity.getId();
+
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+        cursor.close();
+        db.close();
     }
 }

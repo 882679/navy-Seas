@@ -100,7 +100,6 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 		public void setData(Activity currentActivity) {
 			this.activityName.setText(currentActivity.getName());
 			this.capacity.setText(HomeFragment.db.getNumberOfReservations(currentActivity)+"/"+currentActivity.getCapacity());
-			HomeFragment.db.prova(currentActivity);
 			this.imgActivity.setImageResource(MainActivity.getActivityIcon(currentActivity));
 			this.price.setText(String.format("%s0 €", currentActivity.getPrice()));
 

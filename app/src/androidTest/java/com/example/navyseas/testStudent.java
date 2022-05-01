@@ -1,6 +1,6 @@
 package com.example.navyseas;
 
-import com.example.navyseas.database.Model.Activity;
+import com.example.navyseas.database.Model.Family;
 import com.example.navyseas.database.DBHelper;
 import com.example.navyseas.database.Model.Student;
 
@@ -8,8 +8,6 @@ import junit.framework.TestCase;
 
 import org.junit.FixMethodOrder;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import android.content.Context;
 
@@ -20,6 +18,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
 
+import java.util.ArrayList;
+
 /**
  * Instrumented test, which will execute on an Android device.
  *
@@ -28,21 +28,14 @@ import org.junit.runners.MethodSorters;
 
 @RunWith(AndroidJUnit4.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class testActivity extends TestCase {
+public class testStudent extends TestCase {
     Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
     DBHelper db = new DBHelper(appContext);
-    ArrayList<Activity> activities;
-    ArrayList<Activity> activityListBefore = db.getActivities();
 
-    Activity testActivity = new Activity(100, "TestName", "TestDescription", "TestDay", 10.0, 10);
+    Family seas = db.login("Seas@stud.unive.it", "Seas");
+    Student testStudent = new Student(100, "TestStudent", seas.getId());
+    ArrayList<Student> childrenList;
 
-    /*
-     *   update an activity
-     *   check the update
-     *   delete it
-     *   check delete
-     *   activity before == now
-     */
 
     @Test
     public void test1_useAppContext() {
@@ -52,14 +45,14 @@ public class testActivity extends TestCase {
     }
 
     @Test
-    public void test2_addActivity() throws InterruptedException {
-        db.test_addActivity(testActivity);
+    public void test2_addStudent() throws InterruptedException {
+        db.test_addStudent(testStudent);
         Thread.sleep(100);
-        activities = db.getActivities();
+        childrenList = db.getChildren(seas);
         boolean found = false;
-        for (Activity activity :
-                activities) {
-            if (activity.getName().equals(testActivity.getName())) {
+        for (Student student :
+                childrenList) {
+            if (student.getName().equals(testStudent.getName())) {
                 found = true;
                 break;
             }
@@ -68,30 +61,18 @@ public class testActivity extends TestCase {
     }
 
     @Test
-    public void test3_deleteActivity() {
-        db.test_deleteActivity(testActivity);
-        activities = db.getActivities();
+    public void test3_deleteStudent() {
+        db.test_deleteStudent(testStudent);
+        childrenList = db.getChildren(seas);
         boolean found = false;
-        for (Activity activity :
-                activities) {
-            if (activity.getName().equals(testActivity.getName())) {
+        for (Student student :
+                childrenList) {
+            if (student.getName().equals(testStudent.getName())) {
                 found = true;
                 break;
             }
         }
         assertFalse(found);
     }
-
-    @Test
-    public void test4_testdb() {
-        assertEquals(activityListBefore.toString(), db.getActivities().toString());
-    }
-
-    @Test
-    public void test5_capacityVolleyball() {
-        Activity volleyball = db.getActivityByID(4);
-        assertEquals(15, volleyball.getCapacity());
-    }
-
 
 }
