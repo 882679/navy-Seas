@@ -70,7 +70,7 @@ public class ProfileFragment extends Fragment {
 		});
 
 		amountTextView = root.findViewById(R.id.amount);
-		amountTextView.setText(String.format("Totale: %s €", db.getAmount(selectedStudent)));
+		amountTextView.setText(String.format("Totale: %s0 €", db.getAmount(selectedStudent)));
 
 		return root;
 	}
@@ -95,7 +95,7 @@ public class ProfileFragment extends Fragment {
 				studentActivities = db.getActivities(selectedStudent);
 
 				resizeRecyclerView();
-				amountTextView.setText(String.format("Totale: %s €", db.getAmount(selectedStudent)));
+				amountTextView.setText(String.format("Totale: %s0 €", db.getAmount(selectedStudent)));
 				profileAdapter.removeItem(position);
 
 				Snackbar snackbar = Snackbar.make(root, "La prenotazione è stata eliminata.", Snackbar.LENGTH_LONG);
@@ -108,7 +108,7 @@ public class ProfileFragment extends Fragment {
 
 					profileAdapter.restoreItem(activityToRemove, position);
 
-					amountTextView.setText(String.format("Totale: %s €", db.getAmount(selectedStudent)));
+					amountTextView.setText(String.format("Totale: %s0 €", db.getAmount(selectedStudent)));
 					resizeRecyclerView();
 				});
 

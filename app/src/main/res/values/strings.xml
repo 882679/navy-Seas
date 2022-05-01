@@ -19,4 +19,18 @@
     <string name="activityname">activityName</string>
     <string name="description">description</string>
     <string name="cancella_prenotazione">Elimina</string>
+    <string name="prenota">PRENOTA</string>
+    <string name="log_in">Log in</string>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="logout">Logout</string>
 </resources>

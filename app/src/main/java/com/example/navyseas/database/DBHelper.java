@@ -19,6 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Activity Table
     public static final String ACTIVITY_TABLE = "ACTIVITY";
     public static final String ACTIVITY_COLUMN_NAME = "NAME";
+    public static final String ACTIVITY_COLUMN_DESCRIPTION = "DESCRIPTION";
     public static final String ACTIVITY_COLUMN_DAY = "DAY";
     public static final String ACTIVITY_COLUMN_PRICE = "PRICE";
     public static final String ACTIVITY_COLUMN_CAPACITY = "CAPACITY";
@@ -27,6 +28,8 @@ public class DBHelper extends SQLiteOpenHelper {
     // Family Table
     public static final String FAMILY_TABLE = "FAMILY";
     public static final String FAMILY_COLUMN_NAME = "NAME";
+    public static final String FAMILY_COLUMN_EMAIL = "EMAIL";
+    public static final String FAMILY_COLUMN_PASSWORD = "PASSWORD";
     public static final String FAMILY_COLUMN_ID = "ID";
 
     // Student Table
@@ -64,6 +67,7 @@ public class DBHelper extends SQLiteOpenHelper {
         database.execSQL("CREATE TABLE " + ACTIVITY_TABLE + " (" +
                 ACTIVITY_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ACTIVITY_COLUMN_NAME + " TEXT, " +
+                ACTIVITY_COLUMN_DESCRIPTION + " TEXT, " +
                 ACTIVITY_COLUMN_DAY + " TEXT, " +
                 ACTIVITY_COLUMN_PRICE + " REAL, " +
                 ACTIVITY_COLUMN_CAPACITY + " INTEGER" + ")"
@@ -71,7 +75,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
         database.execSQL("CREATE TABLE " + FAMILY_TABLE + " (" +
                 FAMILY_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                FAMILY_COLUMN_NAME + " TEXT)"
+                FAMILY_COLUMN_NAME + " TEXT, " +
+                FAMILY_COLUMN_EMAIL + " TEXT UNIQUE, " +
+                FAMILY_COLUMN_PASSWORD + " TEXT)"
         );
 
         database.execSQL("CREATE TABLE " + STUDENT_TABLE + " (" +
@@ -94,30 +100,60 @@ public class DBHelper extends SQLiteOpenHelper {
         );
 
         database.execSQL("INSERT INTO " + ACTIVITY_TABLE +
-                " (" + ACTIVITY_COLUMN_NAME + ", " + ACTIVITY_COLUMN_DAY + ", " +
-                ACTIVITY_COLUMN_PRICE + ", " + ACTIVITY_COLUMN_CAPACITY + ")" +
-                " VALUES " + "('Scacchi', 'Lunedi', 8, 20), " +
-                "('Lettura', 'Martedi', 7, 30), " + "('Disegno', 'Mercoledi', 5, 10), " +
-                "('Pallavolo', 'Giovedi', 10, 50), " + "('Calcio', 'Venerdi', 15, 20), " +
-                "('Aiuto compiti', 'Lunedi', 10, 60)"
+                " (" + ACTIVITY_COLUMN_NAME + ", " + ACTIVITY_COLUMN_DESCRIPTION + ", " +
+                ACTIVITY_COLUMN_DAY + ", " + ACTIVITY_COLUMN_PRICE + ", " +
+                ACTIVITY_COLUMN_CAPACITY + ")" +
+                " VALUES " +
+                "('Scacchi', 'I bambini passano il pomeriggio scoprendo la bellezza e la profondità del gioco degli scacchi.\n\nImparano strategie utili nella vita allenando la mente.' ,'Lunedi', 8.00, 20), " +
+                "('Lettura', 'I bambini passano il pomeriggio leggendo i libri della biblioteca della scuola a scelta.\n\nDisponibili grandi classici adatti a tutte le età.' ,'Martedi', 7.50, 30), " +
+                "('Disegno', 'I bambini possono esprimere la loro creatività in un laboratorio di arte e disegno con lavoretti di disegno, pittura e decoupage.\n\n(Materiale richiesto comunicato durante le ore di arte)' ,'Mercoledi', 5.00, 10), " +
+                "('Pallavolo', 'I bambini possono divertirsi e fare attività fisica con movimento e gioco di squadra.\n\nLe partite di pallavolo vengono seguite da un insegnante presente.' ,'Giovedi', 10.20, 15), " +
+                "('Calcio', 'I bambini possono divertirsi e fare attività fisica con movimento e gioco di squadra.\n\nLe partite di calcio vengono seguite da un insegnante presente.' ,'Venerdi', 15.50, 20), " +
+                "('Aiuto compiti', 'I bambini vengono seguiti ed aiutati da gli alunni della scuola media.\n\nÈ possibile richiedere lezioni private o aiuto da parte degli insegnanti.' ,'Lunedi', 10.00, 10)"
         );
 
-        database.execSQL("INSERT INTO " + FAMILY_TABLE + " (" + FAMILY_COLUMN_NAME + ")" +
-                " VALUES ('Navy'), ('Seas')"
+        database.execSQL(
+                "INSERT INTO " + FAMILY_TABLE + " (" + FAMILY_COLUMN_NAME + ", " +
+                        FAMILY_COLUMN_EMAIL + ", " + FAMILY_COLUMN_PASSWORD + ")" +
+                        " VALUES ('Famiglia Navy', 'Navy@stud.unive.it', 'Navy'), ('Famiglia Seas', 'Seas@stud.unive.it', 'Seas')"
         );
 
         database.execSQL("INSERT INTO " + STUDENT_TABLE +
                 " (" + STUDENT_COLUMN_NAME + ", " + STUDENT_COLUMN_FAMILY_ID + ")" +
                 " VALUES " + "('Angelo', 1), " + "('Giulia', 1), " + "('Alvise', 1), " +
-                "('Alessandro', 1), " + "('Ivan', 2)");
+                "('Alessandro', 1), " + "('Ivan', 2)," + "('Marco', 2)");
 
         database.execSQL("INSERT INTO " + RESERVATION_TABLE +
-                " VALUES (1, 1), (1, 2), (2, 2), (2, 1), (5, 1)");
+                " VALUES (5, 1), (4, 3), (4, 2), (3, 3), (4, 4), (2, 6), (3, 5), (6, 3), (5, 2), (1, 1)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
+    }
+
+    public Family login(String email, String password) {
+        Family family = null;
+
+        String query = "SELECT * FROM " + FAMILY_TABLE +
+                " WHERE " + FAMILY_COLUMN_EMAIL + " = '" + email +
+                "' AND " + FAMILY_COLUMN_PASSWORD + " = '" + password + "'";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+
+                family = new Family(id, name, email, password);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return family;
     }
 
     /**
@@ -132,6 +168,7 @@ public class DBHelper extends SQLiteOpenHelper {
         cv.put(RESERVATION_COLUMN_STUDENT_ID, reservation.getStudentID());
         cv.put(RESERVATION_COLUMN_ACTIVITY_ID, reservation.getActivityID());
         db.insert(RESERVATION_TABLE, null, cv);
+        db.close();
     }
 
     /**
@@ -168,8 +205,10 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
+                String email = cursor.getString(2);
+                String password = cursor.getString(3);
 
-                families.add(new Family(id, name));
+                families.add(new Family(id, name, email, password));
             } while (cursor.moveToNext());
         }
 
@@ -220,11 +259,13 @@ public class DBHelper extends SQLiteOpenHelper {
             do {
                 int id = cursor.getInt(0);
                 String name = cursor.getString(1);
-                String day = cursor.getString(2);
-                double price = cursor.getDouble(3);
-                int capacity = cursor.getInt(4);
+                System.out.println("/// NOME: "+id + name);
+                String description = cursor.getString(2);
+                String day = cursor.getString(3);
+                double price = cursor.getDouble(4);
+                int capacity = cursor.getInt(5);
 
-                activities.add(new Activity(id, name, day, price, capacity));
+                activities.add(new Activity(id, name, description, day, price, capacity));
             } while (cursor.moveToNext());
         }
 
@@ -255,6 +296,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @return get an activity by its ID.
      */
     public Activity getActivityByID(int id) {
+        Activity a;
         String query = "" +
                 "SELECT *" +
                 "FROM " + ACTIVITY_TABLE + " a " +
@@ -266,25 +308,27 @@ public class DBHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             int activityID = cursor.getInt(0);
             String name = cursor.getString(1);
-            String day = cursor.getString(2);
-            double price = cursor.getDouble(3);
-            int capacity = cursor.getInt(4);
+            String description = cursor.getString(2);
+            String day = cursor.getString(3);
+            double price = cursor.getDouble(4);
+            int capacity = cursor.getInt(5);
+
             cursor.close();
             db.close();
-            return new Activity(activityID, name, day, price, capacity);
-        }else{
-            cursor.close();
-            db.close();
-            return new Activity();
-        }
+            a = new Activity(activityID, name, description, day, price, capacity);
+        } else a = new Activity();
+
+        cursor.close();
+        db.close();
+        return a;
     }
 
     /**
      * @return sum of all activities prices of a given {@link Family}'s children.
      * It's the amount that the {@link Family} owes to the school.
      */
-    public int getAmount(Family family) {
-        int amount = 0;
+    public double getAmount(Family family) {
+        double amount = 0;
 
         String query = "" +
                 "SELECT SUM(" + ACTIVITY_COLUMN_PRICE + ")" +
@@ -303,7 +347,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                amount += cursor.getInt(0);
+                amount += cursor.getDouble(0);
             } while (cursor.moveToNext());
         }
 
@@ -315,8 +359,8 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * @return sum of all activities prices of a given {@link Student}
      */
-    public int getAmount(Student student) {
-        int amount = 0;
+    public double getAmount(Student student) {
+        double amount = 0;
 
         String query = "" +
                 "SELECT SUM(" + ACTIVITY_COLUMN_PRICE + ")" +
@@ -335,7 +379,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                amount += cursor.getInt(0);
+                amount += cursor.getDouble(0);
             } while (cursor.moveToNext());
         }
 
@@ -429,6 +473,48 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     /**
+     * @return list of all given {@link Student}'s reservations.
+     */
+    public int getNumberOfReservations(Activity activity) {
+
+        String query = "SELECT COUNT(" + RESERVATION_COLUMN_ACTIVITY_ID + ") FROM " + RESERVATION_TABLE +
+                " WHERE " + RESERVATION_COLUMN_STUDENT_ID + " = " + activity.getId();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        int count = 0;
+
+        if (cursor.moveToFirst()) {
+            do {
+                count = cursor.getInt(0);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+        return count;
+    }
+
+    public void prova(Activity activity) {
+
+        String query = "SELECT * FROM " + RESERVATION_TABLE +" WHERE " + RESERVATION_COLUMN_STUDENT_ID + " = " + activity.getId();
+
+        System.out.println("MY ACTIVITY: "+activity.getId() + " name: "+ activity.getName());
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                System.out.println("activityid: " +cursor.getInt(0) +" student: "+cursor.getInt(1));
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+        db.close();
+    }
+
+    /**
      * Checks if a given {@link com.example.navyseas.database.Model.Student} can subscribe
      * to a specific {@link com.example.navyseas.database.Model.Activity}.
      *
@@ -468,7 +554,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * @param activity the activity to check
      * @return true if "student" is already subscribed to another activity, false otherwise.
      */
-    public boolean isStudentAlreadySubscribed(Student student, Activity activity) {
+    private boolean isStudentAlreadySubscribed(Student student, Activity activity) {
         for (int i = 0; i < this.getActivities(student).size(); i++) {
             if (this.getActivities(student).get(i).getId() == activity.getId()) return true;
         }
@@ -494,5 +580,18 @@ public class DBHelper extends SQLiteOpenHelper {
      */
     private boolean checkWeeklyActivitiesCap(Student student) {
         return this.getReservations(student).size() < 5;
+    }
+
+    public ArrayList<Activity> getActivities(ArrayList<Reservation> reservations) {
+        ArrayList<Activity> activities = getActivities();
+        ArrayList<Activity> familyActivities = new ArrayList<>();
+
+        for (Activity a : activities) {
+            for (Reservation r : reservations) {
+                if (a.getId() == r.getActivityID()) familyActivities.add(a);
+            }
+        }
+
+        return familyActivities;
     }
 }

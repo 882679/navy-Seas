@@ -22,4 +22,10 @@
         android:name="com.example.navyseas.ui.reservation.ReservationFragment"
         android:label="@string/reservation_title"
         tools:layout="@layout/fragment_reservation" />
+
+    <activity
+        android:id="@+id/nav_logout"
+        android:name="com.example.navyseas.Login"
+        android:label="Logout"
+        tools:layout="@layout/login" />
 </navigation>

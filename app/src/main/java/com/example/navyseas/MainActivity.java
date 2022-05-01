@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.SubMenu;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -20,7 +22,6 @@ import com.example.navyseas.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -62,19 +63,24 @@ public class MainActivity extends AppCompatActivity {
 
 		drawer = binding.drawerLayout;
 		navigationView = binding.navView;
-		// Passing each menu ID as a set of Ids because each
-		// menu should be considered as top level destinations.
 
 		DBHelper dbHelper = new DBHelper(MainActivity.this);
+		selectedFamily = Login.selectedFamily;
 
-		List<Family> l = dbHelper.getFamilies();
-		selectedFamily = l.get(0);
 		children = dbHelper.getChildren(selectedFamily);
 
-		mAppBarConfiguration = new AppBarConfiguration.Builder(
-				R.id.nav_home, R.id.nav_profile)
+
+		mAppBarConfiguration = new AppBarConfiguration
+				.Builder(R.id.nav_home, R.id.nav_profile, R.id.nav_logout)
 				.setOpenableLayout(drawer)
 				.build();
+
+		View headerView = navigationView.getHeaderView(0);
+		TextView familyName = headerView.findViewById(R.id.familyName);
+		TextView familyEmail = headerView.findViewById(R.id.familyEmail);
+		familyName.setText(selectedFamily.getName());
+		familyEmail.setText(selectedFamily.getEmail());
+
 		navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 		NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
 		NavigationUI.setupWithNavController(navigationView, navController);
@@ -90,8 +96,12 @@ public class MainActivity extends AppCompatActivity {
 			i++;
 		}
 
+		SubMenu menuLogout = navigationView.getMenu().addSubMenu("Profilo");
+		menuLogout.add(R.id.nav_logout, i, Menu.NONE, "Logout").setIcon(R.drawable.baseline_logout_black_24dp);
+
 		navigationView.setNavigationItemSelectedListener(item -> {
 			if (item.toString().equals("Home")) navController.navigate(R.id.nav_home);
+			else if (item.toString().equals("Logout")) navController.navigate(R.id.nav_logout);
 			else {
 				for (int j = 0; j < children.size(); j++) {
 					if (children.get(j).getName().contentEquals(item.getTitle()))
