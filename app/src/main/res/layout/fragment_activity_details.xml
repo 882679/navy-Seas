@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="300dp"
     android:layout_height="400dp"
     android:layout_gravity="center"
+    android:background="#d8ffff"
     android:minWidth="300dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -23,10 +24,11 @@
 
         <TextView
             android:id="@+id/activityName"
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="#a6d6d6"
             android:text="@string/activityname"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -38,9 +40,9 @@
     <LinearLayout
         android:layout_width="240dp"
         android:layout_height="170dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="30dp"
-        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
         <TextView
@@ -60,13 +62,13 @@
         android:layout_marginBottom="20dp">
 
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.Icon"
             android:id="@+id/btnDeleteReservation"
-            app:icon="@drawable/baseline_delete_white_24dp"
+            style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancella_prenotazione"
-            />
+            app:backgroundTint="#76a5a5"
+            app:icon="@drawable/baseline_delete_white_24dp" />
     </LinearLayout>
 
 
