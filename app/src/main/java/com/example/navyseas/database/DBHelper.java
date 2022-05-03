@@ -190,32 +190,6 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    /**
-     * @return list of all families that have been recorded by the school
-     */
-    public ArrayList<Family> getFamilies() {
-        ArrayList<Family> families = new ArrayList<>();
-
-        String query = "SELECT * FROM " + FAMILY_TABLE;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(0);
-                String name = cursor.getString(1);
-                String email = cursor.getString(2);
-                String password = cursor.getString(3);
-
-                families.add(new Family(id, name, email, password));
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        return families;
-    }
 
     /**
      * @return list of children of a given {@link Family}.
@@ -469,29 +443,6 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
         db.close();
         return reservations;
-    }
-
-    /**
-     * @return list of all given {@link Student}'s reservations.
-     */
-    public int getNumberOfReservations(Activity activity) {
-
-        String query = "SELECT COUNT(" + RESERVATION_COLUMN_ACTIVITY_ID + ") FROM " + RESERVATION_TABLE +
-                " WHERE " + RESERVATION_COLUMN_STUDENT_ID + " = " + activity.getId();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(query, null);
-        int count = 0;
-
-        if (cursor.moveToFirst()) {
-            do {
-                count = cursor.getInt(0);
-            } while (cursor.moveToNext());
-        }
-
-        cursor.close();
-        db.close();
-        return count;
     }
 
     /**

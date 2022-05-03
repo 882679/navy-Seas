@@ -66,9 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
 		DBHelper dbHelper = new DBHelper(MainActivity.this);
 		selectedFamily = Login.selectedFamily;
-
 		children = dbHelper.getChildren(selectedFamily);
-
 
 		mAppBarConfiguration = new AppBarConfiguration
 				.Builder(R.id.nav_home, R.id.nav_profile, R.id.nav_logout)
@@ -101,7 +99,9 @@ public class MainActivity extends AppCompatActivity {
 
 		navigationView.setNavigationItemSelectedListener(item -> {
 			if (item.toString().equals("Home")) navController.navigate(R.id.nav_home);
+
 			else if (item.toString().equals("Logout")) navController.navigate(R.id.nav_logout);
+
 			else {
 				for (int j = 0; j < children.size(); j++) {
 					if (children.get(j).getName().contentEquals(item.getTitle()))

@@ -52,6 +52,7 @@ public class DetailsDialog extends DialogFragment {
 						student.getId(),
 						activity.getId()
 				));
+
 				navController.navigate(R.id.nav_profile);
 
 				dismiss();

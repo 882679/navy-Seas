@@ -49,8 +49,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 
 		holder.itemView.setOnClickListener(v -> {
 			DetailsDialog dFragment = new DetailsDialog(currentActivity, selectedStudent);
-			// Show DialogFragment
-			dFragment.show(fragManager, "Activity Details Fragment");
+			dFragment.show(fragManager, "Activity Details Fragment");   // Show DialogFragment
 		});
 
 	}
@@ -99,7 +98,9 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
 		// Imposto le informazioni delle cards nel recyclerview
 		public void setData(Activity currentActivity) {
 			this.activityName.setText(currentActivity.getName());
-			this.capacity.setText(HomeFragment.db.getNumberOfReservations(currentActivity)+"/"+currentActivity.getCapacity());
+			this.capacity.setText(HomeFragment.db.getReservations(currentActivity).size()
+					+ "/" + currentActivity.getCapacity()
+			);
 			this.imgActivity.setImageResource(MainActivity.getActivityIcon(currentActivity));
 			this.price.setText(String.format("%s0 €", currentActivity.getPrice()));
 
