@@ -106,7 +106,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 " VALUES " +
                 "('Scacchi', 'I bambini passano il pomeriggio scoprendo la bellezza e la profondità del gioco degli scacchi.\n\nImparano strategie utili nella vita allenando la mente.' ,'Lunedi', 8.00, 20), " +
                 "('Lettura', 'I bambini passano il pomeriggio leggendo i libri della biblioteca della scuola a scelta.\n\nDisponibili grandi classici adatti a tutte le età.' ,'Martedi', 7.50, 30), " +
-                "('Disegno', 'I bambini possono esprimere la loro creatività in un laboratorio di arte e disegno con lavoretti di disegno, pittura e decoupage.\n\n(Materiale richiesto comunicato durante le ore di arte)' ,'Mercoledi', 5.00, 10), " +
+                "('Disegno', 'I bambini possono esprimere la loro creatività in un laboratorio di arte e disegno con lavoretti di disegno, pittura e decoupage.' ,'Mercoledi', 5.00, 10), " +
                 "('Pallavolo', 'I bambini possono divertirsi e fare attività fisica con movimento e gioco di squadra.\n\nLe partite di pallavolo vengono seguite da un insegnante presente.' ,'Giovedi', 10.20, 15), " +
                 "('Calcio', 'I bambini possono divertirsi e fare attività fisica con movimento e gioco di squadra.\n\nLe partite di calcio vengono seguite da un insegnante presente.' ,'Venerdi', 15.50, 20), " +
                 "('Aiuto compiti', 'I bambini vengono seguiti ed aiutati da gli alunni della scuola media.\n\nÈ possibile richiedere lezioni private o aiuto da parte degli insegnanti.' ,'Lunedi', 10.00, 10)"

@@ -4,7 +4,6 @@
     android:layout_width="300dp"
     android:layout_height="400dp"
     android:layout_gravity="center"
-    android:background="#d8ffff"
     android:minWidth="300dp"
     android:orientation="vertical">
 
@@ -28,7 +27,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            android:background="#a6d6d6"
             android:text="@string/activityname"
             android:textColor="@color/black"
             android:textSize="18sp"
