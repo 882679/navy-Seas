@@ -219,7 +219,6 @@ public class DBHelper extends SQLiteOpenHelper {
 			String date = sdf.format(new Date());
 
 			Payment p = new Payment(0, amount, date, family.getId());
-			System.out.println(p);
 
 			ContentValues cv = new ContentValues();
 			cv.put(PAYMENT_COLUMN_ID, p.getId());
