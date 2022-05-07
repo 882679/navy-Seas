@@ -8,9 +8,5 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/baseline_home_black_24dp"
             android:title="@string/menu_home" />
-        <!--<item
-            android:id="@+id/nav_logout"
-            android:icon="@drawable/baseline_logout_black_24dp"
-            android:title="@string/logout" />-->
     </group>
 </menu>

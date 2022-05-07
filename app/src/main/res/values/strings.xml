@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">navySEAS</string>
+    <string name="app_name">NavySEAS</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_family">Famiglia Falcarin</string>
@@ -33,4 +33,9 @@
     <string name="password">Password</string>
     <string name="email">Email</string>
     <string name="logout">Logout</string>
+    <string name="paga_ora">Paga ora</string>
+    <string name="cronologia_pagamenti">Cronologia pagamenti</string>
+    <string name="data">Data</string>
+    <string name="importo">Importo</string>
+    <string name="metodo_di_pagamento">Metodo di pagamento</string>
 </resources>

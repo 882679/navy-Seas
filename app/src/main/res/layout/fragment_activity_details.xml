@@ -53,21 +53,17 @@
 
     </LinearLayout>
 
-    <LinearLayout
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDeleteReservation"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnDeleteReservation"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancella_prenotazione"
-            app:backgroundTint="#76a5a5"
-            app:icon="@drawable/baseline_delete_white_24dp" />
-    </LinearLayout>
+        android:layout_marginBottom="20dp"
+        android:text="@string/cancella_prenotazione"
+        app:backgroundTint="#76a5a5"
+        app:icon="@drawable/baseline_delete_white_24dp" />
 
 
 </LinearLayout>

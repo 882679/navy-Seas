@@ -69,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
 		children = dbHelper.getChildren(selectedFamily);
 
 		mAppBarConfiguration = new AppBarConfiguration
-				.Builder(R.id.nav_home, R.id.nav_profile, R.id.nav_logout)
+				.Builder(R.id.nav_home, R.id.nav_profile, R.id.nav_logout,
+				R.id.nav_payments)
 				.setOpenableLayout(drawer)
 				.build();
 
@@ -90,15 +91,18 @@ public class MainActivity extends AppCompatActivity {
 		int i = 1;
 
 		for (Student s : children) {
-			menuGroup.add(R.id.nav_profile, i, Menu.NONE, s.getName()).setIcon(R.drawable.ic_student);
+			menuGroup.add(R.id.nav_profile, i, Menu.NONE, s.getName()).setIcon(R.drawable.icon_user);
 			i++;
 		}
 
 		SubMenu menuLogout = navigationView.getMenu().addSubMenu("Profilo");
+		menuLogout.add(R.id.nav_payments, i, Menu.NONE, "Pagamenti").setIcon(R.drawable.icon_payment);
 		menuLogout.add(R.id.nav_logout, i, Menu.NONE, "Logout").setIcon(R.drawable.baseline_logout_black_24dp);
 
 		navigationView.setNavigationItemSelectedListener(item -> {
 			if (item.toString().equals("Home")) navController.navigate(R.id.nav_home);
+
+			else if (item.toString().equals("Pagamenti")) navController.navigate(R.id.nav_payments);
 
 			else if (item.toString().equals("Logout")) navController.navigate(R.id.nav_logout);
 

@@ -53,21 +53,17 @@
 
     </LinearLayout>
 
-    <LinearLayout
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnAddReservation"
+        style="@style/Widget.MaterialComponents.Button.Icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="20dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAddReservation"
-            style="@style/Widget.MaterialComponents.Button.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/prenota"
-            app:backgroundTint="#76a5a5"
-            app:icon="@android:drawable/ic_input_add" />
-    </LinearLayout>
+        android:layout_marginBottom="20dp"
+        android:text="@string/prenota"
+        app:backgroundTint="#76a5a5"
+        app:icon="@android:drawable/ic_input_add" />
 
 
 </LinearLayout>

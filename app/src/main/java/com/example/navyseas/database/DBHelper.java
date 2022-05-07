@@ -221,18 +221,43 @@ public class DBHelper extends SQLiteOpenHelper {
 			Payment p = new Payment(0, amount, date, family.getId());
 
 			ContentValues cv = new ContentValues();
-			cv.put(PAYMENT_COLUMN_ID, p.getId());
 			cv.put(PAYMENT_COLUMN_AMOUNT, p.getAmount());
 			cv.put(PAYMENT_COLUMN_DATE, p.getDate());
 			cv.put(PAYMENT_COLUMN_FAMILY_ID, p.getIdFamily());
 			db.insert(PAYMENT_TABLE, null, cv);
 
-			ArrayList<Reservation> reservations = getReservations(family);
+			/*ArrayList<Reservation> reservations = getReservations(family);
 			for (Reservation r : reservations) {
 				unsubscribe(r);
-			}
+			}*/
 		}
 	}
+
+	public ArrayList<Payment> getPayments(Family family) {
+		ArrayList<Payment> payments = new ArrayList<>();
+
+		String query = "SELECT * FROM " + PAYMENT_TABLE +
+				" WHERE " + PAYMENT_COLUMN_FAMILY_ID + " = " + family.getId();
+
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+
+		if (cursor.moveToFirst()) {
+			do {
+				int id = cursor.getInt(0);
+				double amount = cursor.getDouble(1);
+				String date = cursor.getString(2);
+				int familyID = cursor.getInt(3);
+
+				payments.add(new Payment(id, amount, date, familyID));
+			} while (cursor.moveToNext());
+		}
+
+		cursor.close();
+		db.close();
+		return payments;
+	}
+
 
 
 	/**
@@ -366,6 +391,13 @@ public class DBHelper extends SQLiteOpenHelper {
 			do {
 				amount += cursor.getDouble(0);
 			} while (cursor.moveToNext());
+		}
+
+		// sottraggo all'amount tutti i pagamenti già effettuati
+		ArrayList<Payment> payments = getPayments(family);
+		for (Payment p :
+				payments){
+			amount-= p.getAmount();
 		}
 
 		cursor.close();

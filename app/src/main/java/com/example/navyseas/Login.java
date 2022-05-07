@@ -20,6 +20,7 @@ public class Login extends AppCompatActivity {
 	public TextInputLayout input_email, input_pwd;
 	public String error;
 	public View v;
+	public DBHelper db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,10 @@ public class Login extends AppCompatActivity {
 		input_email = findViewById(R.id.input_email);
 		input_pwd = findViewById(R.id.input_password);
 
+		db = new DBHelper(Login.this);
+
 		Button btnLogin = findViewById(R.id.button_login);
 		btnLogin.setOnClickListener(view -> {
-			DBHelper db = new DBHelper(Login.this);
 			v = view;
 
 			if (check()) {
