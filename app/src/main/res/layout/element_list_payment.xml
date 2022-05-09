@@ -3,13 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="70dp"
     android:orientation="horizontal"
-    android:paddingLeft="10dp">
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <TextView
         android:id="@+id/date"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
+        android:text="2022-05-07"
         android:layout_gravity="center"
         android:textColor="@color/black" />
 
@@ -19,12 +21,13 @@
         android:maxLines="1"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:text="61.20 €"
         android:textColor="@color/black" />
 
 
     <ImageView
         android:id="@+id/paypal_ic"
-        android:layout_width="150dp"
+        android:layout_width="110dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
         android:src="@drawable/paypal_logo" />

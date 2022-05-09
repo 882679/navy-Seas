@@ -1,5 +1,7 @@
 package com.example.navyseas.database.Model;
 
+import java.util.Objects;
+
 public class Payment {
 	private final int id;           // PRIMARY KEY
 	private final double amount;
@@ -28,6 +30,15 @@ public class Payment {
 	public int getIdFamily() {
 		return idFamily;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Payment payment = (Payment) o;
+		return Double.compare(payment.amount, amount) == 0 && idFamily == payment.idFamily && Objects.equals(date, payment.date);
+	}
+
 
 	@Override
 	public String toString() {
