@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.navyseas.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.navyseas.ui.profile.ProfileFragment"
+        android:label="@string/profile_title"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/nav_reservation"
+        android:name="com.example.navyseas.ui.reservation.ReservationFragment"
+        android:label="@string/reservation_title"
+        tools:layout="@layout/fragment_reservation" />
+
+    <activity
+        android:id="@+id/nav_logout"
+        android:name="com.example.navyseas.Login"
+        android:label="Logout"
+        tools:layout="@layout/login" />
+
+    <fragment
+        android:id="@+id/nav_payments"
+        android:name="com.example.navyseas.ui.payment.PaymentsFragment"
+        android:label="Payment"
+        tools:layout="@layout/fragment_payments" />
+</navigation>

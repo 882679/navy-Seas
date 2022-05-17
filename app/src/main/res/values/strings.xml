@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">NavySEAS</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_family">Famiglia Falcarin</string>
+    <string name="nav_header_email">falcarin@stud.unive.it</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="profile_title">Profilo</string>
+    <string name="reservation_title">Lista attività extra-scolastiche</string>
+    <string name="day">day</string>
+    <string name="_10_50">10.50€</string>
+    <string name="activity_name">Activity Name</string>
+    <string name="student_name">Student name</string>
+    <string name="totale_10_00">Totale: 10.00 €</string>
+    <string name="welcome">Bentornato, ecco la lista delle tue\n ultime prenotazioni:</string>
+    <string name="activityname">activityName</string>
+    <string name="description">description</string>
+    <string name="cancella_prenotazione">Elimina</string>
+    <string name="prenota">PRENOTA</string>
+    <string name="log_in">Log in</string>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="logout">Logout</string>
+    <string name="paga_ora">Paga ora</string>
+    <string name="cronologia_pagamenti">Cronologia pagamenti</string>
+    <string name="data">Data</string>
+    <string name="importo">Importo</string>
+    <string name="metodo_di_pagamento">Metodo utilizzato</string>
+</resources>
