@@ -56,7 +56,6 @@ public class PaymentsFragment extends Fragment {
         amount = db.getAmount(selectedFamily);
 
         ArrayList<Payment> payments = db.getPayments(selectedFamily);
-        System.out.println(Arrays.toString(payments.toArray()));
 
         RecyclerView recyclerView = root.findViewById(R.id.recyclerViewPayment);
 

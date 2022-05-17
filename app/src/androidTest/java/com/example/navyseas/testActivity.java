@@ -36,13 +36,6 @@ public class testActivity extends TestCase {
 
     Activity testActivity = new Activity(100, "TestName", "TestDescription", "TestDay", 10.0, 10);
 
-    /*
-     *   update an activity
-     *   check the update
-     *   delete it
-     *   check delete
-     *   activity before == now
-     */
 
     @Test
     public void test1_useAppContext() {
